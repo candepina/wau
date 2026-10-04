@@ -1,0 +1,21 @@
+# Archivos de compilación de Java/Maven
+backend/target/
+**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+
+# Archivos de configuración de IntelliJ
+.idea/
+backend/.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
