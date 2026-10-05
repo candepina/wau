@@ -1,8 +1,8 @@
-version: '3.8'
 services:
-  postgres-db:
+  postgres:
     image: postgres:16-alpine
     container_name: wau-postgres
+    restart: always
     environment:
       POSTGRES_DB: wau_db
       POSTGRES_USER: postgres
@@ -10,6 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata_wau:/var/lib/postgresql/data
+      - wau_postgres_data:/var/lib/postgresql/data
+
 volumes:
-  pgdata_wau:
+  wau_postgres_data:
