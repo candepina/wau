@@ -45,7 +45,8 @@ loginForm.addEventListener('submit', async (e) => {
 
         const data = await response.json();
 
-        // Guardar datos básicos de sesión
+        // Guardar token y datos del usuario
+        localStorage.setItem('token', data.token);
         localStorage.setItem('userSession', JSON.stringify({
             id: data.id,
             email: data.email,

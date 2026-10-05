@@ -8,6 +8,7 @@ import com.wau.backend.entity.Guarderia;
 import com.wau.backend.entity.RolUsuario;
 import com.wau.backend.entity.Usuario;
 import com.wau.backend.repository.UsuarioRepository;
+import com.wau.backend.security.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,14 @@ public class AuthService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(UsuarioRepository usuarioRepository,
+                       PasswordEncoder passwordEncoder,
+                       JwtService jwtService) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public LoginResponse autenticar(LoginRequest request) {
@@ -30,13 +35,17 @@ public class AuthService {
             throw new RuntimeException("Credenciales inválidas: contraseña incorrecta");
         }
 
+        String token = jwtService.generarToken(usuario.getEmail(), usuario.getRol().name(), usuario.getId());
+
         return new LoginResponse(
                 usuario.getId(),
                 usuario.getEmail(),
                 usuario.getRol(),
+                token,
                 "Autenticación exitosa"
         );
     }
+
     public LoginResponse registrar(RegistroRequest request) {
         String emailNormalizado = request.getEmail().trim().toLowerCase();
 
@@ -63,7 +72,6 @@ public class AuthService {
             throw new RuntimeException("Rol de usuario inválido");
         }
 
-        // Seteo de datos comunes heredados de la clase abstracta Usuario
         nuevoUsuario.setEmail(emailNormalizado);
         nuevoUsuario.setPassword(passwordEncoder.encode(request.getPassword()));
         nuevoUsuario.setTelefono(request.getTelefono());
@@ -71,12 +79,14 @@ public class AuthService {
 
         Usuario usuarioGuardado = usuarioRepository.save(nuevoUsuario);
 
+        String token = jwtService.generarToken(usuarioGuardado.getEmail(), usuarioGuardado.getRol().name(), usuarioGuardado.getId());
+
         return new LoginResponse(
                 usuarioGuardado.getId(),
                 usuarioGuardado.getEmail(),
                 usuarioGuardado.getRol(),
+                token,
                 "Usuario registrado exitosamente"
         );
     }
-
 }
