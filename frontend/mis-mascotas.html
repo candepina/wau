@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau - Mis Mascotas</title>
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/mis-mascotas.css" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <div class="logo">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau</span>
+        </div>
+        <button class="icon-btn" aria-label="Notificaciones">
+            <i class="fa-regular fa-bell"></i>
+        </button>
+    </header>
+
+    <!-- Contenido Scrollable -->
+    <main class="main-content">
+
+        <!-- Encabezado con título y botón de agregar -->
+        <div class="page-header-action">
+            <h1 class="page-title">Mis Mascotas</h1>
+            <a href="registro-mascota.html" class="btn-add-pet-header" title="Registrar nueva mascota">
+                <i class="fa-solid fa-plus"></i>
+            </a>
+        </div>
+
+        <!-- Contenedor dinámico de tarjetas de mascotas -->
+        <section class="pets-grid" id="petsGrid"></section>
+
+        <!-- Estado vacío (si el dueño aún no tiene mascotas) -->
+        <section class="card empty-pet-card" id="emptyPetsState" style="display: none;">
+            <div class="empty-icon-wrapper">
+                <i class="fa-solid fa-paw"></i>
+            </div>
+            <div class="empty-pet-content">
+                <h3>No tenés mascotas cargadas</h3>
+                <p>Registrá a tu compañero para que la guardería pueda gestionar sus cuidados y actividades.</p>
+                <a href="registro-mascota.html" class="btn btn-register-pet">
+                    <i class="fa-solid fa-plus"></i> Registrar mascota
+                </a>
+            </div>
+        </section>
+
+        <!-- Botón flotante al final de la lista si ya hay mascotas -->
+        <div class="add-pet-footer" id="addPetFooter" style="display: none;">
+            <a href="registro-mascota.html" class="btn btn-register-pet w-100">
+                <i class="fa-solid fa-plus"></i> Agregar otra mascota
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation Bar (patita activa) -->
+    <nav class="bottom-nav">
+        <a href="home.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="mis-mascotas.html" class="nav-item active">
+            <i class="fa-solid fa-paw"></i>
+            <span>Mis Mascotas</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-regular fa-comment-dots"></i>
+            <span>Comunicación</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-regular fa-user"></i>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+</div>
+
+<script src="js/mis-mascotas.js"></script>
+</body>
+</html>

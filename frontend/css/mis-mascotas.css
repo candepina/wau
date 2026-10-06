@@ -1,0 +1,114 @@
+/* Encabezado con botón circular de suma */
+.page-header-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-add-pet-header {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-orange);
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(226, 109, 67, 0.3);
+    transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+.btn-add-pet-header:hover {
+    background-color: #CF5A30;
+    transform: scale(1.05);
+}
+
+/* Grilla / Lista de mascotas */
+.pets-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+/* Tarjeta individual de mascota */
+.pet-item-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.pet-item-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.pet-avatar-placeholder {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background-color: #FDF1E7;
+    color: var(--primary-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.pet-item-title h2 {
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    margin-bottom: 3px;
+}
+
+.pet-item-title span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Badges con información clave */
+.pet-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.badge-tag {
+    background-color: #F8EDE3;
+    color: var(--text-dark);
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+/* Observaciones resumidas */
+.pet-observations-preview {
+    border-top: 1px solid #F1E7DD;
+    padding-top: 10px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+}
+
+.pet-observations-preview strong {
+    color: var(--text-dark);
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.add-pet-footer {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}

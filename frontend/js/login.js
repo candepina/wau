@@ -58,11 +58,10 @@ loginForm.addEventListener('submit', async (e) => {
         // Redirección según rol
         setTimeout(() => {
             if (data.rol === 'ROLE_DUENO') {
-                alert(`¡Bienvenido dueño! (ID: ${data.id})`);
-                // window.location.href = '/dashboard-dueno.html';
+                window.location.href = 'home.html';
             } else if (data.rol === 'ROLE_GUARDERIA') {
                 alert(`¡Bienvenida guardería! (ID: ${data.id})`);
-                // window.location.href = '/dashboard-guarderia.html';
+                // window.location.href = 'dashboard-guarderia.html';
             }
         }, 800);
 

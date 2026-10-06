@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau - Home</title>
+    <link rel="stylesheet" href="css/home.css" />
+    <!-- Íconos de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<!-- Contenedor estilo App Mobile -->
+<div class="app-container">
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <div class="logo">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau</span>
+        </div>
+        <button class="icon-btn" aria-label="Notificaciones">
+            <i class="fa-regular fa-bell"></i>
+        </button>
+    </header>
+
+    <!-- Contenido Scrollable -->
+    <main class="main-content">
+        <h1 class="page-title">Home</h1>
+
+        <!-- 1. Tarjeta Mascota Activa (Oculta por defecto hasta confirmar datos) -->
+        <section class="card pet-card" id="petCard" style="display: none;">
+            <div class="pet-avatar-wrapper">
+                <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=150&q=80" alt="Mascota" id="petAvatar" />
+            </div>
+            <div class="pet-info">
+                <h2 id="petName">Nombre</h2>
+                <p class="pet-status">
+                    <i class="fa-solid fa-paw"></i>
+                    <span id="petStatusText">Estado</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. Empty State: cuando NO hay mascotas registradas -->
+        <section class="card empty-pet-card" id="emptyPetCard" style="display: none;">
+            <div class="empty-icon-wrapper">
+                <i class="fa-solid fa-dog"></i>
+            </div>
+            <div class="empty-pet-content">
+                <h3>¡Te damos la bienvenida a Wau!</h3>
+                <p>Todavía no registraste ninguna mascota en tu cuenta.</p>
+                <a href="registro-mascota.html" class="btn btn-register-pet">
+                    <i class="fa-solid fa-plus"></i> Registrar mi primera mascota
+                </a>
+            </div>
+        </section>
+        <!-- ENVOLTORIO: Todo esto se oculta automáticamente si no hay mascota -->
+        <div id="petActivitySection" style="display: none;">
+
+            <!-- Botones de Acción / Reportes -->
+            <section class="action-buttons">
+                <button class="btn btn-primary">
+                    <i class="fa-solid fa-clipboard-list"></i> Reporte diario
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Historial de reportes
+                </button>
+            </section>
+
+            <!-- Últimas Actualizaciones -->
+            <section class="section-block">
+                <div class="section-header">
+                    <h3>Últimas actualizaciones</h3>
+                    <a href="#" class="link-more" id="linkVerActualizaciones" style="display: none;">Ver todas</a>
+                </div>
+
+                <!-- Contenedor dinámico de eventos -->
+                <div class="timeline-list" id="timelineList"></div>
+
+                <!-- Empty state de actualizaciones -->
+                <div class="empty-subcard" id="emptyUpdates">
+                    <i class="fa-regular fa-clock"></i>
+                    <p>Aún no hay actividades registradas hoy.<br><small>La guardería te avisará cuando coma o salga de paseo.</small></p>
+                </div>
+            </section>
+
+            <!-- Galería Rápida -->
+            <section class="section-block">
+                <div class="section-header">
+                    <h3>Galería Rápida</h3>
+                    <a href="#" class="link-more" id="linkVerGaleria" style="display: none;">Ver todas</a>
+                </div>
+
+                <!-- Contenedor dinámico de fotos -->
+                <div class="gallery-scroll" id="galleryList"></div>
+
+                <!-- Empty state de galería -->
+                <div class="empty-subcard" id="emptyGallery">
+                    <i class="fa-regular fa-image"></i>
+                    <p>Aún no hay fotos de la estadía.<br><small>Las fotos que suba la guardería aparecerán acá.</small></p>
+                </div>
+            </section>
+        </div> <!--fin sección que se oculta-->
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+        <a href="home.html" class="nav-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="mis-mascotas.html" class="nav-item">
+            <i class="fa-solid fa-paw"></i>
+            <span>Mis Mascotas</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-regular fa-comment-dots"></i>
+            <span>Comunicación</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-regular fa-user"></i>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+</div>
+
+<script src="js/home.js"></script>
+</body>
+</html>
