@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-        window.location.href = "login.html";
+        window.location.href = "../index.html";
         return;
     }
 
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (response.status === 401 || response.status === 403) {
             localStorage.removeItem("token");
-            window.location.href = "login.html";
+            window.location.href = "../index.html";
             return;
         }
 

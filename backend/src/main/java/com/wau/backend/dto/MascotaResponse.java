@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MascotaResponse {
     private Long id;
+    private String codigo;
     private String nombre;
     private String raza;
     private Integer edad;

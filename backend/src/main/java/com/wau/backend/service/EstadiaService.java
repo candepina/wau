@@ -37,8 +37,9 @@ public class EstadiaService {
             throw new RuntimeException("Solo usuarios con rol Guardería pueden crear estadías");
         }
 
-        Mascota mascota = mascotaRepository.findById(request.getMascotaId())
-                .orElseThrow(() -> new RuntimeException("Mascota no encontrada con ID: " + request.getMascotaId()));
+        // Buscamos por el código patente en vez del ID numérico
+        Mascota mascota = mascotaRepository.findByCodigo(request.getCodigoMascota().trim().toUpperCase())
+                .orElseThrow(() -> new RuntimeException("No se encontró ninguna mascota con el código: " + request.getCodigoMascota()));
 
         Estadia estadia = new Estadia();
         estadia.setMascota(mascota);

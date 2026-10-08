@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wau - Registrar Mascota</title>
-    <link rel="stylesheet" href="css/home.css" />
-    <link rel="stylesheet" href="css/registro-mascota.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+
+    <link rel="stylesheet" href="../css/dueno/registro-mascota.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 <body>
@@ -48,26 +49,16 @@
                 <input type="text" id="nombre" name="nombre" placeholder="Ej: Milo" required />
             </div>
 
-            <div class="form-row">
-                <div class="form-group flex-1">
-                    <label for="tipo">Especie *</label>
-                    <select id="tipo" name="tipo" required>
-                        <option value="PERRO">Perro</option>
-                        <option value="GATO">Gato</option>
-                        <option value="OTRO">Otro</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="raza">Raza</label>
+                <input type="text" id="raza" name="raza" placeholder="Ej: Golden Retriever, Caniche, Mestizo" />
+            </div>
 
+            <!-- Fila doble equilibrada: Edad y Tamaño (50% cada uno con flex-1) -->
+            <div class="form-row">
                 <div class="form-group flex-1">
                     <label for="edad">Edad (años)</label>
                     <input type="number" id="edad" name="edad" min="0" max="30" placeholder="Ej: 3" />
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group flex-1">
-                    <label for="raza">Raza</label>
-                    <input type="text" id="raza" name="raza" placeholder="Ej: Golden Retriever" />
                 </div>
 
                 <div class="form-group flex-1">
@@ -79,8 +70,7 @@
                     </select>
                 </div>
             </div>
-
-            <!-- Bloque 1: Salud y nutrición -->
+            <!-- 2. Salud y nutrición -->
             <h3 class="section-title">Salud y nutrición</h3>
             <div class="form-group">
                 <label for="alimentacion">Alimentación y horarios</label>
@@ -92,14 +82,14 @@
                 <textarea id="alergias" rows="2" placeholder="Ej: Alérgico al pollo o libreta sanitaria al día..."></textarea>
             </div>
 
-            <!-- Bloque 2: Medicación -->
+            <!-- 3. Medicación -->
             <h3 class="section-title">Medicación</h3>
             <div class="form-group">
                 <label for="medicacion">Medicación y horarios (si aplica)</label>
                 <textarea id="medicacion" rows="2" placeholder="Ej: Gotas cada 12 hs, comprimidos..."></textarea>
             </div>
 
-            <!-- Bloque 3: Cuidados especiales / Conducta -->
+            <!-- 4. Cuidados especiales / Conducta -->
             <h3 class="section-title">Cuidados especiales</h3>
             <div class="form-group">
                 <label for="conductuales">Observaciones (miedo a truenos, convivencia, etc.)</label>
@@ -113,12 +103,11 @@
             <button type="submit" class="btn-submit-pet" id="btnSubmit">
                 Registrar mascota
             </button>
-
         </form>
     </main>
 
 </div>
 
-<script src="js/registro-mascota.js"></script>
+<script src="../js/dueno/registro-mascota.js"></script>
 </body>
 </html>

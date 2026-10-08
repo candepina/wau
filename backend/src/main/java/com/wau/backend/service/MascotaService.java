@@ -32,6 +32,7 @@ public class MascotaService {
         }
 
         Mascota mascota = new Mascota();
+        mascota.setCodigo(generarCodigoUnico()); // Se genera y asigna solo
         mascota.setNombre(request.getNombre());
         mascota.setRaza(request.getRaza());
         mascota.setEdad(request.getEdad());
@@ -54,10 +55,29 @@ public class MascotaService {
                 .map(this::mapearADTO)
                 .collect(Collectors.toList());
     }
+    // Método auxiliar para generar código único estilo patente
+    private String generarCodigoUnico() {
+        String caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Sin O, 0, I, 1 para evitar confusiones
+        StringBuilder sb = new StringBuilder();
+        java.util.Random random = new java.util.Random();
+
+        String codigoGenerado;
+        do {
+            sb.setLength(0);
+            for (int i = 0; i < 7; i++) {
+                sb.append(caracteres.charAt(random.nextInt(caracteres.length())));
+            }
+            codigoGenerado = sb.toString();
+        } while (mascotaRepository.existsByCodigo(codigoGenerado));
+
+        return codigoGenerado;
+    }
+
 
     private MascotaResponse mapearADTO(Mascota mascota) {
         return new MascotaResponse(
                 mascota.getId(),
+                mascota.getCodigo(),
                 mascota.getNombre(),
                 mascota.getRaza(),
                 mascota.getEdad(),

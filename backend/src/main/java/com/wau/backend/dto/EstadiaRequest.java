@@ -1,6 +1,7 @@
 package com.wau.backend.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class EstadiaRequest {
 
-    @NotNull(message = "El ID de la mascota es obligatorio")
-    private Long mascotaId;
+    @NotBlank(message = "El código identificador de la mascota es obligatorio")
+    private String codigoMascota;
 
     @NotNull(message = "La fecha de inicio es obligatoria")
     private LocalDate fechaInicio;

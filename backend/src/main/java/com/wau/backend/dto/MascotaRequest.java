@@ -14,11 +14,9 @@ public class MascotaRequest {
 
     @NotBlank(message = "El nombre de la mascota es obligatorio")
     private String nombre;
-
     private String raza;
     private Integer edad;
     private String tamano;
-
     private String observacionesMedicas;
     private String observacionesConductuales;
     private String observacionesGenerales;

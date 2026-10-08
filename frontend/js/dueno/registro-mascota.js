@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Validación de sesión activa
     if (!token) {
-        window.location.href = "login.html";
+        window.location.href = "../index.html";
         return;
     }
 
@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 1. Extraer datos del formulario
         const nombre = document.getElementById("nombre").value.trim();
-        const tipo = document.getElementById("tipo").value;
         const edadVal = document.getElementById("edad").value;
         const edad = edadVal ? parseInt(edadVal, 10) : null;
         const raza = document.getElementById("raza").value.trim();
@@ -36,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const payload = {
             nombre,
-            tipo,
             raza: raza || "Mestizo",
             edad,
             tamano,
