@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau Staff - Panel de Control</title>
+    <!-- Estilos base globales y específicos del panel -->
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/guarderia/home.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Top Bar del Staff -->
+    <header class="top-bar">
+        <div class="logo">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau Staff</span>
+        </div>
+        <div class="top-bar-actions">
+            <button class="icon-btn" id="btnLogout" title="Cerrar sesión">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+
+        <!-- Cabecera de métrica y acción -->
+        <section class="dashboard-header">
+            <div>
+                <h1 class="page-title" style="margin-bottom: 2px;">Huéspedes</h1>
+                <p class="subtitle" id="guestCounter">Cargando estadías...</p>
+            </div>
+            <a href="nueva-estadia.html" class="btn-new-stay" title="Nuevo Check-in">
+                <i class="fa-solid fa-plus"></i>
+                <span>Check-in</span>
+            </a>
+        </section>
+
+        <!-- Grid dinámico de perros hospedados -->
+        <section class="guests-list" id="guestsContainer"></section>
+
+        <!-- Estado vacío (Reutiliza clases globales de base.css) -->
+        <section class="empty-pet-card" id="emptyGuestsState" style="display: none;">
+            <div class="empty-icon-wrapper">
+                <i class="fa-solid fa-hotel"></i>
+            </div>
+            <div class="empty-pet-content">
+                <h3>No hay huéspedes activos</h3>
+                <p>Ingresá la patente identificadora de la mascota para comenzar una estadía.</p>
+                <a href="nueva-estadia.html" class="btn-register-pet">
+                    <i class="fa-solid fa-key"></i> Registrar Check-in
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Barra inferior para el personal -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item active">
+            <i class="fa-solid fa-hotel"></i>
+            <span>Huéspedes</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-camera"></i>
+            <span>Novedades</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Historial</span>
+        </a>
+    </nav>
+
+</div>
+
+<script src="../js/guarderia/home.js"></script>
+</body>
+</html>

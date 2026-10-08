@@ -1,0 +1,169 @@
+/* Cabecera del Dashboard */
+.top-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-top: 6px;
+}
+
+.subtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+/* Botón destacado de Check-in */
+.btn-new-stay {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--primary-orange);
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 22px;
+    box-shadow: 0 4px 10px rgba(226, 109, 67, 0.25);
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-new-stay:hover {
+    background-color: var(--primary-orange-hover);
+    transform: translateY(-1px);
+}
+
+/* Lista y Tarjetas de Huéspedes */
+.guests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.guest-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.guest-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.guest-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: #F8EDE3;
+    color: var(--primary-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.guest-info h2 {
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    margin-bottom: 3px;
+}
+
+.guest-info span {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+/* Badges de Estado y Fechas */
+.guest-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.guest-badge {
+    background-color: #F8EDE3;
+    color: var(--text-dark);
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge-active {
+    background-color: #E8F5E9;
+    color: var(--icon-green);
+}
+
+/* Notas de recepción */
+.guest-notes {
+    background-color: #FAF6F0;
+    border-left: 3px solid var(--primary-orange);
+    padding: 8px 12px;
+    border-radius: 4px 8px 8px 4px;
+    font-size: 0.8rem;
+    color: var(--text-dark);
+    line-height: 1.35;
+}
+
+/* Acciones rápidas sobre el huésped */
+.guest-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.btn-guest-action {
+    flex: 1;
+    background-color: #F8EDE3;
+    border: none;
+    color: var(--text-dark);
+    padding: 8px 12px;
+    border-radius: 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-guest-action:hover {
+    background-color: #EBDDCE;
+}
+
+.btn-guest-action.primary {
+    background-color: #FAD3B2;
+    color: #8C4724;
+}
+
+.btn-guest-action.primary:hover {
+    background-color: #F5C196;
+}
+/* Botón de acción: Finalizar / Check-out */
+.btn-guest-action.danger {
+    background-color: #FDE8E8;
+    color: #C53030;
+}
+
+.btn-guest-action.danger:hover {
+    background-color: #FBD5D5;
+}

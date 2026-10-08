@@ -172,3 +172,85 @@ body {
     background-color: var(--primary-orange-hover);
     transform: translateY(-1px);
 }
+/* ===================================================
+   COMPONENTE GLOBAL: Botón Píldora / Acción Principal
+   =================================================== */
+.btn-primary-action,
+.btn-register-pet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--primary-orange) !important;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 12px 22px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(226, 109, 67, 0.25);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary-action:hover,
+.btn-register-pet:hover {
+    background-color: var(--primary-orange-hover) !important;
+    transform: translateY(-1px);
+}
+
+.btn-primary-action i,
+.btn-register-pet i {
+    color: #FFFFFF !important;
+    font-size: 0.95rem;
+}
+
+/* Modificador opcional: Ancho completo */
+.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+/* ===================================================
+   COMPONENTE GLOBAL: Empty State (Estado Vacío)
+   =================================================== */
+.empty-pet-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    margin-bottom: 24px;
+    border: 1.5px dashed #DCCBC0;
+}
+
+.empty-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    background-color: #F8EDE3;
+    color: var(--primary-orange);
+    font-size: 1.8rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px auto;
+}
+
+.empty-icon-wrapper i {
+    color: var(--primary-orange);
+}
+
+.empty-pet-content h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.empty-pet-content p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    line-height: 1.4;
+}

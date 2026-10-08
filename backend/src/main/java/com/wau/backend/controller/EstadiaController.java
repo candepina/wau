@@ -36,4 +36,13 @@ public class EstadiaController {
         List<EstadiaResponse> activas = estadiaService.listarEstadiasActivas(email);
         return ResponseEntity.ok(activas);
     }
+    @PatchMapping("/{id}/finalizar")
+    public ResponseEntity<EstadiaResponse> finalizarEstadia(
+            @PathVariable Long id,
+            Authentication authentication) {
+        String email = authentication.getName();
+        EstadiaResponse response = estadiaService.finalizarEstadia(email, id);
+        return ResponseEntity.ok(response);
+    }
+
 }

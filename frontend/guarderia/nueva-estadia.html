@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau Staff - Registrar Check-in</title>
+    <!-- Estilos base compartidos y propios de la vista -->
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/guarderia/nueva-estadia.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Top Bar con botón de retorno al Home de guardería -->
+    <header class="top-bar-form">
+        <a href="home.html" class="btn-back" aria-label="Volver">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="logo-small">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau Staff</span>
+        </div>
+        <div style="width: 24px;"></div> <!-- Espaciador para centrar el logo -->
+    </header>
+
+    <main class="main-content">
+        <h1 class="form-title">REGISTRAR CHECK-IN</h1>
+        <p class="form-subtitle">Ingresá los datos de recepción del huésped</p>
+
+        <form id="nuevaEstadiaForm" class="checkin-form">
+
+            <!-- Código identificador (Patente) -->
+            <div class="form-group">
+                <label for="codigoMascota">Código de la mascota *</label>
+                <div class="input-code-wrapper">
+                    <i class="fa-solid fa-hashtag input-icon"></i>
+                    <input
+                            type="text"
+                            id="codigoMascota"
+                            name="codigoMascota"
+                            placeholder="Ej: AC909YV"
+                            maxlength="15"
+                            autocomplete="off"
+                            required
+                    />
+                </div>
+                <small class="field-hint">Código alfanumérico provisto por el dueño en su perfil.</small>
+            </div>
+
+            <!-- Fechas de la estadía -->
+            <div class="form-row">
+                <div class="form-group flex-1">
+                    <label for="fechaInicio">Fecha de Ingreso *</label>
+                    <input type="date" id="fechaInicio" name="fechaInicio" required />
+                </div>
+
+                <div class="form-group flex-1">
+                    <label for="fechaFin">Fecha de Salida (est.)</label>
+                    <input type="date" id="fechaFin" name="fechaFin" />
+                </div>
+            </div>
+
+            <!-- Pertenencias y observaciones de recepción -->
+            <div class="form-group">
+                <label for="notasIngreso">Pertenencias e indicaciones de recepción</label>
+                <textarea
+                        id="notasIngreso"
+                        name="notasIngreso"
+                        rows="3"
+                        placeholder="Ej: Trae bolsa de alimento para 4 días, plato metálico, mantita azul y correa roja..."
+                ></textarea>
+            </div>
+
+            <!-- Feedback de errores o éxito -->
+            <div id="formFeedback" class="feedback-msg" style="display: none;"></div>
+
+            <!-- Botón de acción principal -->
+            <button type="submit" class="btn-primary-action btn-block" id="btnSubmit">
+                <i class="fa-solid fa-check"></i>
+                <span>Confirmar Check-in</span>
+            </button>
+
+        </form>
+    </main>
+
+</div>
+
+<script src="../js/guarderia/nueva-estadia.js"></script>
+</body>
+</html>

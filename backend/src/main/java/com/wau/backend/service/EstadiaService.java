@@ -76,4 +76,30 @@ public class EstadiaService {
                 estadia.getNotasIngreso()
         );
     }
+    public EstadiaResponse finalizarEstadia(String emailGuarderia, Long estadiaId) {
+        Usuario usuario = usuarioRepository.findByEmail(emailGuarderia)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (!(usuario instanceof Guarderia guarderia)) {
+            throw new RuntimeException("Solo la guardería puede finalizar estadías");
+        }
+
+        Estadia estadia = estadiaRepository.findById(estadiaId)
+                .orElseThrow(() -> new RuntimeException("Estadía no encontrada con ID: " + estadiaId));
+
+        // Validación de pertenencia
+        if (!estadia.getGuarderia().getId().equals(guarderia.getId())) {
+            throw new RuntimeException("No tenés permiso para modificar esta estadía");
+        }
+
+        if ("FINALIZADA".equalsIgnoreCase(estadia.getEstado())) {
+            throw new RuntimeException("Esta estadía ya se encuentra finalizada");
+        }
+
+        estadia.setEstado("FINALIZADA");
+        estadia.setFechaFin(java.time.LocalDate.now()); // Registra la fecha de egreso efectiva
+
+        Estadia guardada = estadiaRepository.save(estadia);
+        return mapearADTO(guardada);
+    }
 }

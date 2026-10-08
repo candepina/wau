@@ -60,7 +60,7 @@ loginForm.addEventListener('submit', async (e) => {
             if (data.rol === 'ROLE_DUENO') {
                 window.location.href = 'dueno/home.html';
             } else if (data.rol === 'ROLE_GUARDERIA') {
-                alert(`¡Bienvenida guardería! (ID: ${data.id})`);
+                window.location.href = 'guarderia/home.html';
                 // window.location.href = 'dashboard-guarderia.html';
             }
         }, 800);
