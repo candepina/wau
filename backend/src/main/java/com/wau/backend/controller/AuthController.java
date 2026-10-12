@@ -10,7 +10,7 @@ import com.wau.backend.dto.RegistroRequest;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // Habilita peticiones desde cualquier origen (esencial para el frontend PWA)
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final AuthService authService;
@@ -20,21 +20,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
-        try {
-            LoginResponse response = authService.autenticar(request);
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = authService.autenticar(request);
+        return ResponseEntity.ok(response);
     }
+
     @PostMapping("/registro")
-    public ResponseEntity<?> registrar(@Valid @RequestBody RegistroRequest request) {
-        try {
-            LoginResponse response = authService.registrar(request);
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<LoginResponse> registrar(@Valid @RequestBody RegistroRequest request) {
+        LoginResponse response = authService.registrar(request);
+        return ResponseEntity.ok(response);
     }
 }

@@ -22,6 +22,7 @@ public abstract class Usuario {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String telefono;
 
     @Enumerated(EnumType.STRING)

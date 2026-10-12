@@ -160,6 +160,18 @@ input:focus {
     border: 1px solid var(--success-border);
 }
 
+.input-error {
+    border-color: var(--danger-text) !important;
+    box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.15) !important;
+}
+
+.field-error {
+    color: var(--danger-text);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
 .spinner {
     display: none;
     width: 16px;
