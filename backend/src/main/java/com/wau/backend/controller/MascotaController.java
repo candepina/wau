@@ -36,4 +36,32 @@ public class MascotaController {
         List<MascotaResponse> mascotas = mascotaService.listarMascotasDelDueno(email);
         return ResponseEntity.ok(mascotas);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MascotaResponse> obtenerMascota(
+            @PathVariable Long id,
+            Authentication authentication) {
+        String email = authentication.getName();
+        MascotaResponse response = mascotaService.obtenerMascotaPorId(id, email);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MascotaResponse> actualizarMascota(
+            @PathVariable Long id,
+            @Valid @RequestBody MascotaRequest request,
+            Authentication authentication) {
+        String email = authentication.getName();
+        MascotaResponse response = mascotaService.actualizarMascota(id, request, email);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarMascota(
+            @PathVariable Long id,
+            Authentication authentication) {
+        String email = authentication.getName();
+        mascotaService.eliminarMascota(id, email);
+        return ResponseEntity.noContent().build();
+    }
 }

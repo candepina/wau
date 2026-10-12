@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             addPetFooter.style.display = "block";
 
             petsGrid.innerHTML = mascotas.map(mascota => `
-        <article class="pet-item-card">
+        <article class="pet-item-card" data-id="${mascota.id}">
           <div class="pet-item-header">
             <div class="pet-avatar-placeholder">
               <i class="fa-solid ${mascota.tipo === 'GATO' ? 'fa-cat' : 'fa-dog'}"></i>
@@ -44,9 +44,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
           </div>
 
-          <div class="pet-tags">
-            <span class="badge-tag"><i class="fa-solid fa-cake-candles"></i> ${mascota.edad ? mascota.edad + ' años' : 'Edad sin definir'}</span>
-            <span class="badge-tag"><i class="fa-solid fa-weight-scale"></i> ${mascota.tamano || 'Tamaño sin definir'}</span>
+          <div class="pet-code">
+            <span class="code-label">Código</span>
+            <span class="code-value">${mascota.codigo || '—'}</span>
           </div>
 
           ${mascota.observacionesMedicas ? `
@@ -56,6 +56,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           ` : ''}
         </article>
       `).join("");
+
+            // Navegación a detalle al hacer click en la card
+            petsGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.pet-item-card');
+                if (card && !e.target.closest('button, a')) {
+                    window.location.href = `detalle-mascota.html?id=${card.dataset.id}`;
+                }
+            });
 
         } else {
             petsGrid.style.display = "none";

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau - Detalle de Mascota</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/dueno/detalle-mascota.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Top Bar con flecha de retorno y botón editar -->
+    <header class="top-bar-form">
+        <a href="mis-mascotas.html" class="btn-back" aria-label="Volver">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="logo-small">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau</span>
+        </div>
+        <button id="btnEdit" class="btn-icon" aria-label="Editar" title="Editar"><i class="fa-solid fa-pen"></i></button>
+    </header>
+
+    <main class="main-content">
+        <h1 class="form-title" id="pageTitle">DETALLE MASCOTA</h1>
+
+        <!-- Selector de foto circular (placeholder) -->
+        <div class="avatar-upload-container">
+            <div class="avatar-circle">
+                <i class="fa-solid fa-paw default-avatar-icon"></i>
+            </div>
+        </div>
+
+        <!-- Formulario de detalle/edición -->
+        <form id="detalleMascotaForm" class="pet-form">
+
+            <!-- Datos básicos -->
+            <div class="form-group">
+                <label for="nombre">Nombre de la mascota *</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: Milo" required disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="raza">Raza</label>
+                <input type="text" id="raza" name="raza" placeholder="Ej: Golden Retriever, Caniche, Mestizo" disabled />
+            </div>
+
+            <!-- Fila doble equilibrada: Edad y Tamaño (50% cada uno con flex-1) -->
+            <div class="form-row">
+                <div class="form-group flex-1">
+                    <label for="edad">Edad (años)</label>
+                    <input type="number" id="edad" name="edad" min="0" max="30" placeholder="Ej: 3" disabled />
+                </div>
+
+                <div class="form-group flex-1">
+                    <label for="tamano">Tamaño</label>
+                    <select id="tamano" name="tamano" disabled>
+                        <option value="PEQUENO">Pequeño</option>
+                        <option value="MEDIANO">Mediano</option>
+                        <option value="GRANDE">Grande</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 2. Salud y nutrición -->
+            <h3 class="section-title">Salud y nutrición</h3>
+            <div class="form-group">
+                <label for="alimentacion">Alimentación y horarios</label>
+                <textarea id="alimentacion" rows="2" placeholder="Ej: 2 raciones al día (mañana y noche)..." disabled></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="alergias">Alergias</label>
+                <textarea id="alergias" rows="2" placeholder="Ej: Alérgico al pollo o libreta sanitaria al día..." disabled></textarea>
+            </div>
+
+            <!-- 3. Medicación -->
+            <h3 class="section-title">Medicación</h3>
+            <div class="form-group">
+                <label for="medicacion">Medicación y horarios (si aplica)</label>
+                <textarea id="medicacion" rows="2" placeholder="Ej: Gotas cada 12 hs, comprimidos..." disabled></textarea>
+            </div>
+
+            <!-- 4. Cuidados especiales / Conducta -->
+            <h3 class="section-title">Cuidados especiales</h3>
+            <div class="form-group">
+                <label for="conductuales">Observaciones (miedo a truenos, convivencia, etc.)</label>
+                <textarea id="conductuales" rows="2" placeholder="Ej: Sociable con otros perros, miedo a tormentas..." disabled></textarea>
+            </div>
+
+            <!-- Mensajes de feedback -->
+            <div id="formFeedback" class="feedback-msg" style="display: none;"></div>
+
+            <!-- BARRA DE ACCIONES FIJA ABAJO -->
+            <div class="actions-bar" id="actionsBar">
+                <!-- MODO VISTA (inicial) -->
+                <div id="actionsView" class="actions-group">
+                    <button type="button" id="btnEditMain" class="btn btn-primary">Editar</button>
+                    <button type="button" id="btnDelete" class="btn btn-danger-outline">Eliminar</button>
+                </div>
+                <!-- MODO EDICIÓN (oculto inicialmente) -->
+                <div id="actionsEdit" class="actions-group" style="display: none;">
+                    <button type="submit" id="btnSave" class="btn btn-primary">
+                        <span class="btn-text">Guardar cambios</span>
+                        <span class="btn-spinner" style="display: none;"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    </button>
+                    <button type="button" id="btnCancel" class="btn btn-secondary">Cancelar</button>
+                    <button type="button" id="btnDeleteEdit" class="btn btn-danger-outline">
+                        <span class="btn-text">Eliminar</span>
+                        <span class="btn-spinner" style="display: none;"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+</div>
+
+    <!-- Modal para confirmación de eliminación (Bottom Sheet mobile-first) -->
+    <div id="modalOverlay" class="modal-overlay" style="display: none;">
+        <div class="modal modal-bottom-sheet">
+            <div class="modal-grabber"></div>
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="modalCancel" class="btn btn-secondary">Cancelar</button>
+                <button id="modalConfirm" class="btn btn-danger">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="../js/dueno/detalle-mascota.js"></script>
+</body>
+</html>

@@ -5,8 +5,12 @@ import com.wau.backend.dto.MascotaResponse;
 import com.wau.backend.entity.Dueno;
 import com.wau.backend.entity.Mascota;
 import com.wau.backend.entity.Usuario;
+import com.wau.backend.exception.MascotaConEstadiaActivaException;
+import com.wau.backend.exception.MascotaNotFoundException;
+import com.wau.backend.repository.EstadiaRepository;
 import com.wau.backend.repository.MascotaRepository;
 import com.wau.backend.repository.UsuarioRepository;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +21,12 @@ public class MascotaService {
 
     private final MascotaRepository mascotaRepository;
     private final UsuarioRepository usuarioRepository;
+    private final EstadiaRepository estadiaRepository;
 
-    public MascotaService(MascotaRepository mascotaRepository, UsuarioRepository usuarioRepository) {
+    public MascotaService(MascotaRepository mascotaRepository, UsuarioRepository usuarioRepository, EstadiaRepository estadiaRepository) {
         this.mascotaRepository = mascotaRepository;
         this.usuarioRepository = usuarioRepository;
+        this.estadiaRepository = estadiaRepository;
     }
 
     public MascotaResponse registrarMascota(String emailUsuario, MascotaRequest request) {
@@ -55,6 +61,52 @@ public class MascotaService {
                 .map(this::mapearADTO)
                 .collect(Collectors.toList());
     }
+
+    public MascotaResponse actualizarMascota(Long id, MascotaRequest request, String email) {
+        Mascota mascota = mascotaRepository.findById(id)
+                .orElseThrow(() -> new MascotaNotFoundException(id));
+
+        if (!mascota.getDueno().getEmail().equals(email)) {
+            throw new AccessDeniedException("No tenés permiso para modificar esta mascota.");
+        }
+
+        mascota.setNombre(request.getNombre());
+        mascota.setRaza(request.getRaza());
+        mascota.setEdad(request.getEdad());
+        mascota.setTamano(request.getTamano());
+        mascota.setObservacionesMedicas(request.getObservacionesMedicas());
+        mascota.setObservacionesConductuales(request.getObservacionesConductuales());
+        mascota.setObservacionesGenerales(request.getObservacionesGenerales());
+
+        return mapearADTO(mascotaRepository.save(mascota));
+    }
+
+    public void eliminarMascota(Long id, String email) {
+        Mascota mascota = mascotaRepository.findById(id)
+                .orElseThrow(() -> new MascotaNotFoundException(id));
+
+        if (!mascota.getDueno().getEmail().equals(email)) {
+            throw new AccessDeniedException("No tenés permiso para eliminar esta mascota.");
+        }
+
+        if (estadiaRepository.existsByMascotaIdAndEstado(id, "ACTIVA")) {
+            throw new MascotaConEstadiaActivaException();
+        }
+
+        mascotaRepository.delete(mascota);
+    }
+
+    public MascotaResponse obtenerMascotaPorId(Long id, String email) {
+        Mascota mascota = mascotaRepository.findById(id)
+                .orElseThrow(() -> new MascotaNotFoundException(id));
+
+        if (!mascota.getDueno().getEmail().equals(email)) {
+            throw new AccessDeniedException("No tenés permiso para ver esta mascota.");
+        }
+
+        return mapearADTO(mascota);
+    }
+
     // Método auxiliar para generar código único estilo patente
     private String generarCodigoUnico() {
         String caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Sin O, 0, I, 1 para evitar confusiones

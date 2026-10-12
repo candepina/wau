@@ -40,6 +40,12 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.pet-item-card:hover {
+    background: #faf7f5;
 }
 
 .pet-item-header {
@@ -72,19 +78,30 @@
     color: var(--text-muted);
 }
 
-.pet-tags {
+.pet-code {
     display: flex;
+    align-items: center;
     gap: 8px;
-    flex-wrap: wrap;
+    padding: 8px 12px;
+    background-color: #F8EDE3;
+    border-radius: 12px;
+    font-size: 0.85rem;
 }
 
-.badge-tag {
-    background-color: #F8EDE3;
-    color: var(--text-dark);
-    padding: 5px 12px;
-    border-radius: 12px;
+.code-label {
+    color: var(--text-muted);
+    font-weight: 500;
     font-size: 0.78rem;
-    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.code-value {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary-orange);
+    letter-spacing: 1px;
 }
 
 .pet-observations-preview {
