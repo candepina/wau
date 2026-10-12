@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau Staff - Mi Perfil</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/guarderia/perfil.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Top Bar con flecha de retorno y botón editar -->
+    <header class="top-bar-form">
+        <a href="home.html" class="btn-back" aria-label="Volver">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="logo-small">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau Staff</span>
+        </div>
+        <button id="btnEdit" class="btn-icon" aria-label="Editar" title="Editar"><i class="fa-solid fa-pen"></i></button>
+    </header>
+
+    <main class="main-content">
+        <h1 class="form-title" id="pageTitle">MI PERFIL</h1>
+
+        <!-- Avatar placeholder -->
+        <div class="avatar-upload-container">
+            <div class="avatar-circle">
+                <i class="fa-solid fa-building default-avatar-icon"></i>
+            </div>
+        </div>
+
+        <!-- Formulario de perfil -->
+        <form id="perfilForm" class="pet-form">
+
+            <!-- Datos de cuenta (solo lectura) -->
+            <h3 class="section-title">Datos de cuenta</h3>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="rol">Rol</label>
+                <input type="text" id="rol" name="rol" disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="fechaAlta">Fecha de alta</label>
+                <input type="text" id="fechaAlta" name="fechaAlta" disabled />
+            </div>
+
+            <!-- Datos de la guardería -->
+            <h3 class="section-title">Datos de la guardería</h3>
+            <div class="form-group">
+                <label for="nombreEstablecimiento">Nombre del establecimiento *</label>
+                <input type="text" id="nombreEstablecimiento" name="nombreEstablecimiento" required disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="nombreResponsable">Nombre del responsable *</label>
+                <input type="text" id="nombreResponsable" name="nombreResponsable" required disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="direccionPredio">Dirección del predio *</label>
+                <input type="text" id="direccionPredio" name="direccionPredio" required disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono *</label>
+                <input type="tel" id="telefono" name="telefono" required disabled />
+            </div>
+
+            <!-- Cambio de contraseña -->
+            <h3 class="section-title">Cambiar contraseña</h3>
+            <p class="password-hint">Dejá los campos vacíos si no querés cambiar la contraseña</p>
+
+            <div class="form-group">
+                <label for="passwordActual">Contraseña actual</label>
+                <input type="password" id="passwordActual" name="passwordActual" autocomplete="current-password" disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="passwordNuevo">Nueva contraseña</label>
+                <input type="password" id="passwordNuevo" name="passwordNuevo" autocomplete="new-password" disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="passwordNuevoConfirmacion">Confirmar nueva contraseña</label>
+                <input type="password" id="passwordNuevoConfirmacion" name="passwordNuevoConfirmacion" autocomplete="new-password" disabled />
+            </div>
+
+            <!-- Mensajes de feedback -->
+            <div id="formFeedback" class="feedback-msg" style="display: none;"></div>
+
+            <!-- BARRA DE ACCIONES FIJA ABAJO -->
+            <div class="actions-bar" id="actionsBar">
+                <!-- MODO VISTA (inicial) -->
+                <div id="actionsView" class="actions-group">
+                    <button type="button" id="btnEditMain" class="btn btn-primary">Editar</button>
+                    <button type="button" id="btnDelete" class="btn btn-danger-outline">Eliminar cuenta</button>
+                </div>
+                <!-- MODO EDICIÓN (oculto inicialmente) -->
+                <div id="actionsEdit" class="actions-group" style="display: none;">
+                    <button type="submit" id="btnSave" class="btn btn-primary">
+                        <span class="btn-text">Guardar cambios</span>
+                        <span class="btn-spinner" style="display: none;"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    </button>
+                    <button type="button" id="btnCancel" class="btn btn-secondary">Cancelar</button>
+                    <button type="button" id="btnDeleteEdit" class="btn btn-danger">
+                        <span class="btn-text">Eliminar cuenta</span>
+                        <span class="btn-spinner" style="display: none;"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+</div>
+
+<!-- Modal para confirmación de eliminación (Bottom Sheet mobile-first) -->
+<div id="modalOverlay" class="modal-overlay" style="display: none;">
+    <div class="modal modal-bottom-sheet">
+        <div class="modal-grabber"></div>
+        <div class="modal-header">
+            <h3 id="modalTitle"></h3>
+        </div>
+        <div class="modal-body">
+            <p id="modalMessage"></p>
+        </div>
+        <div class="modal-footer">
+            <button id="modalCancel" class="btn btn-secondary">Cancelar</button>
+            <button id="modalConfirm" class="btn btn-danger">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast container -->
+<div id="toastContainer" class="toast-container"></div>
+
+<script src="../js/guarderia/perfil.js"></script>
+</body>
+</html>

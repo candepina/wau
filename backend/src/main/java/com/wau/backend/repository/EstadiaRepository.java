@@ -16,4 +16,10 @@ public interface EstadiaRepository extends JpaRepository<Estadia, Long> {
 
     // Verificar si una mascota tiene estadía activa
     boolean existsByMascotaIdAndEstado(Long mascotaId, String estado);
+
+    // Verificar si alguna mascota de un dueño tiene estadía activa
+    boolean existsByMascotaDuenoIdAndEstado(Long duenoId, String estado);
+
+    // Verificar si una guardería tiene estadías activas
+    boolean existsByGuarderiaIdAndEstado(Long guarderiaId, String estado);
 }

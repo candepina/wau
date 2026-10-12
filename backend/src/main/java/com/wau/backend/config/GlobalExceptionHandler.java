@@ -2,6 +2,8 @@ package com.wau.backend.config;
 
 import com.wau.backend.exception.MascotaConEstadiaActivaException;
 import com.wau.backend.exception.MascotaNotFoundException;
+import com.wau.backend.exception.UsuarioConEstadiasActivasException;
+import com.wau.backend.exception.UsuarioNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +56,11 @@ public class GlobalExceptionHandler {
         return buildError(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(UsuarioNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleUsuarioNotFound(UsuarioNotFoundException ex) {
+        return buildError(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, Object>> handleAccessDenied(AccessDeniedException ex) {
         return buildError(HttpStatus.FORBIDDEN, "No tenés permiso para realizar esta acción.");
@@ -61,6 +68,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MascotaConEstadiaActivaException.class)
     public ResponseEntity<Map<String, Object>> handleEstadiaActiva(MascotaConEstadiaActivaException ex) {
+        return buildError(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(UsuarioConEstadiasActivasException.class)
+    public ResponseEntity<Map<String, Object>> handleUsuarioConEstadiasActivas(UsuarioConEstadiasActivasException ex) {
         return buildError(HttpStatus.CONFLICT, ex.getMessage());
     }
 
