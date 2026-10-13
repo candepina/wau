@@ -39,7 +39,7 @@
 /* Timeline Header */
 .timeline-header {
     padding: 20px;
-    border-bottom: 1px solid #f1e7dd;
+
 }
 
 .timeline-title {
@@ -531,5 +531,46 @@
     
     .card-label {
         font-size: 0.9rem;
+    }
+
+    .fab-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background-color: #B84A12;
+        color: #FFFFFF;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 14px rgba(184, 74, 18, 0.4);
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Ícono '+' dentro del círculo */
+    .fab-btn .fab-icon {
+        font-size: 32px;
+        font-weight: 300;
+        line-height: 1;
+        margin-top: -2px; /* Centrado óptico del '+' */
+    }
+
+    /* Efectos interactivos al pasar el mouse o tocar en el celular */
+    .fab-btn:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 6px 18px rgba(184, 74, 18, 0.5);
+        background-color: #A03E0E;
+    }
+
+    .fab-btn:active {
+        transform: translateY(0) scale(0.95);
+        box-shadow: 0 2px 8px rgba(184, 74, 18, 0.3);
     }
 }

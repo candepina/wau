@@ -20,6 +20,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const timelineTitle = document.getElementById("timelineTitle");
     const timelineList = document.getElementById("timelineList");
     const emptyTimeline = document.getElementById("emptyTimeline");
+    const btnNuevaActividadHeader = document.getElementById("btnNuevaActividadHeader");
+    const fabNuevaActividad = document.getElementById("fabNuevaActividad");
+    const btnPrimeraActividad = document.getElementById("btnPrimeraActividad");
+
+    // Configurar hrefs de los botones de nueva actividad
+    const nuevaActividadUrl = `nueva-actividad.html?id=${estadiaId}`;
+    if (btnNuevaActividadHeader) btnNuevaActividadHeader.href = nuevaActividadUrl;
+    if (fabNuevaActividad) fabNuevaActividad.href = nuevaActividadUrl;
+    if (btnPrimeraActividad) btnPrimeraActividad.href = nuevaActividadUrl;
 
     // Mapeo de tipos a iconos, labels y colorClass
     const tipoConfig = {

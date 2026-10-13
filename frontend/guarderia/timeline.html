@@ -21,9 +21,10 @@
             <i class="fa-solid fa-paw"></i>
             <span>Wau Staff</span>
         </div>
-        <button class="icon-btn" aria-label="Notificaciones">
-            <i class="fa-regular fa-bell"></i>
-        </button>
+        <!--
+        <a id="btnNuevaActividadHeader" href="#" class="btn-icon" aria-label="Nueva actividad" title="Nueva actividad">
+            <i class="fa-solid fa-plus"></i>
+        </a>-->
     </header>
 
     <main class="main-content">
@@ -43,8 +44,8 @@
                 </div>
                 <h3>No hay actividades registradas</h3>
                 <p>No hay registros de actividades todavía para esta mascota.</p>
-                <a id="btnPrimeraActividad" href="#" class="btn btn-primary">
-                    <i class="fa-solid fa-plus"></i> Añadir primera actividad
+                <a cla id="btnPrimeraActividad" href="#" class="btn btn-primary ">
+                    <i class="fa-solid fa-plus "></i> Añadir primera actividad
                 </a>
             </div>
 
@@ -52,6 +53,28 @@
             <div class="timeline-list" id="timelineList" style="display: none;"></div>
         </section>
     </main>
+
+    <!-- FAB flotante para añadir actividad -->
+    <a id="fabNuevaActividad" href="#" class="fab-add-activity" aria-label="Nueva actividad">
+        <i class="fa-solid fa-plus" style="position: fixed;
+        bottom: 24px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background-color: #B84A12;
+        color: #FFFFFF;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 14px rgba(184, 74, 18, 0.4);
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        -webkit-tap-highlight-color: transparent; "></i>
+    </a>
 
 </div>
 
