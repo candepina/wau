@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau Staff - Nueva Actividad</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/guarderia/nueva-actividad.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Top Bar -->
+    <header class="top-bar-form">
+        <a id="btnVolver" href="#" class="btn-back" aria-label="Volver">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="logo-small">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau Staff</span>
+        </div>
+        <div style="width: 24px;"></div>
+    </header>
+
+    <main class="main-content">
+        <h1 class="form-title">NUEVA ACTIVIDAD</h1>
+
+        <form id="nuevaActividadForm" class="activity-form">
+
+            <!-- Selector de tipo de actividad -->
+            <div class="form-group">
+                <label for="tipo">Tipo de actividad *</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="" disabled selected>Seleccionar tipo</option>
+                    <option value="CHECK_IN">Check-in</option>
+                    <option value="PASEO">Paseo</option>
+                    <option value="COMIDA">Comida servida</option>
+                    <option value="DESCANSO">Descanso</option>
+                    <option value="MEDICINA">Medicina/Tratamiento</option>
+                    <option value="CHECK_OUT">Check-out</option>
+                </select>
+            </div>
+
+            <!-- Info sobre validaciones -->
+            <div class="validation-info" id="validationInfo" style="display: none;">
+                <i class="fa-solid fa-circle-info"></i>
+                <span id="validationText"></span>
+            </div>
+
+            <!-- Mensajes de feedback -->
+            <div id="formFeedback" class="feedback-msg" style="display: none;"></div>
+
+            <!-- Botón de acción -->
+            <button type="submit" class="btn-submit-activity" id="btnSubmit">
+                <span class="btn-text">Registrar actividad</span>
+                <span class="btn-spinner" style="display: none;"><i class="fa-solid fa-spinner fa-spin"></i></span>
+            </button>
+        </form>
+    </main>
+
+</div>
+
+<script src="../js/guarderia/nueva-actividad.js"></script>
+</body>
+</html>

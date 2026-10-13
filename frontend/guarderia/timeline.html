@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau Staff - Actualizaciones</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/guarderia/timeline.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Top Bar -->
+    <header class="top-bar-form">
+        <a href="home.html" class="btn-back" aria-label="Volver">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="logo-small">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau Staff</span>
+        </div>
+        <button class="icon-btn" aria-label="Notificaciones">
+            <i class="fa-regular fa-bell"></i>
+        </button>
+    </header>
+
+    <main class="main-content">
+        <!-- Header del Timeline -->
+        <section class="timeline-header">
+            <div class="timeline-header-info">
+                <h1 class="timeline-title">Actualizaciones</h1>
+            </div>
+        </section>
+
+        <!-- Lista de actividades (Timeline vertical) -->
+        <section class="timeline-container" id="timelineContainer">
+            <!-- Empty state -->
+            <div class="empty-timeline" id="emptyTimeline" style="display: none;">
+                <div class="empty-icon-wrapper">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <h3>No hay actividades registradas</h3>
+                <p>No hay registros de actividades todavía para esta mascota.</p>
+                <a id="btnPrimeraActividad" href="#" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Añadir primera actividad
+                </a>
+            </div>
+
+            <!-- Timeline con actividades -->
+            <div class="timeline-list" id="timelineList" style="display: none;"></div>
+        </section>
+    </main>
+
+</div>
+
+<script src="../js/guarderia/timeline.js"></script>
+</body>
+</html>

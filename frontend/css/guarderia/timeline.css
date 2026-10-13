@@ -1,0 +1,535 @@
+/* Top bar form */
+.top-bar-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+}
+
+.btn-back {
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.logo-small {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary-orange);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 8px;
+}
+
+.icon-btn:hover {
+    color: var(--primary-orange);
+}
+
+/* Timeline Header */
+.timeline-header {
+    padding: 20px;
+    border-bottom: 1px solid #f1e7dd;
+}
+
+.timeline-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #5C2518;
+    margin: 0;
+}
+
+/* Timeline Container - Línea vertical central */
+.timeline-container {
+    position: relative;
+    padding: 0;
+}
+
+/* Línea vertical central - centrada en el nodo de 40px (centro en 20px) */
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #dcdcdc;
+    z-index: 1;
+}
+
+/* Empty Timeline State */
+.empty-timeline {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.empty-timeline .empty-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #F8EDE3;
+    color: var(--primary-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 16px;
+}
+
+.empty-timeline h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin: 0 0 8px;
+}
+
+.empty-timeline p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.empty-timeline .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Date Badge (agrupador de fecha) */
+.date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #F2F2F2;
+    color: #6B6B6B;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    margin-top: 16px;
+    width: fit-content;
+    position: relative;
+    z-index: 3;
+}
+
+/* Date Badge posicionado sobre la primera card del grupo */
+.timeline-list > .date-badge {
+    position: absolute;
+    left: calc(20px + 40px + 16px + 12px);
+    top: 0;
+    margin-top: -28px;
+    margin-bottom: 0;
+    z-index: 10;
+}
+
+/* Ajuste para date-badge en móvil */
+@media (max-width: 480px) {
+    .timeline-list > .date-badge {
+        left: calc(18px + 36px + 12px + 10px);
+        margin-top: -24px;
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+}
+
+/* Empty Timeline State */
+.empty-timeline {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.empty-timeline .empty-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #F8EDE3;
+    color: var(--primary-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 16px;
+}
+
+.empty-timeline h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin: 0 0 8px;
+}
+
+.empty-timeline p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.empty-timeline .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Date Group */
+.date-group {
+    margin-bottom: 24px;
+}
+
+.date-group:last-child {
+    margin-bottom: 0;
+}
+
+.date-group .date-badge {
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+/* Timeline List */
+.timeline-list {
+    position: relative;
+    padding-left: 0;
+}
+
+/* Timeline Item - Flex container con nodo + tarjeta */
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+/* Nodo circular (icono) - CRÍTICO: flex-shrink: 0, SIN position:absolute */
+.timeline-node {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.timeline-node i {
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+/* Colores de fondo de los nodos */
+.timeline-node.paseo { background-color: #2D5A27; }
+.timeline-node.comida { background-color: #B84A12; }
+.timeline-node.descanso { background-color: #1D3B58; }
+.timeline-node.check-in { background-color: #6B3A7B; }
+.timeline-node.check-out { background-color: #6B3A7B; }
+.timeline-node.medicina { background-color: #2B2B2B; }
+
+.timeline-node i {
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+/* Tarjeta de la actividad */
+.timeline-card {
+    flex: 1;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.card-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 10px;
+}
+
+.card-type.paseo { background: #E8F5E9; color: #2D5A27; }
+.card-type.comida { background: #FFF3E0; color: #B84A12; }
+.card-type.descanso { background: #E8EBF5; color: #1D3B58; }
+.card-type.check-in { background: #F3EDF7; color: #6B3A7B; }
+.card-type.check-out { background: #F3EDF7; color: #6B3A7B; }
+.card-type.medicina { background: #EDEDED; color: #2B2B2B; }
+
+.card-type i {
+    font-size: 0.7rem;
+}
+
+.card-time {
+    font-size: 0.75rem;
+    color: #999;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.card-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #5C2518;
+    margin: 0;
+}
+
+/* Date Badge (agrupador de fecha) */
+.date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #F2F2F2;
+    color: #6B6B6B;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    margin-top: 16px;
+    width: fit-content;
+    position: relative;
+    z-index: 3;
+}
+
+/* Date Badge positioning: posicionar sobre la primera card del grupo */
+.timeline-list > .date-badge {
+    position: absolute;
+    left: calc(20px + 40px + 16px + 12px);
+    top: 0;
+    margin-top: -28px;
+    margin-bottom: 0;
+    z-index: 10;
+}
+
+@media (max-width: 480px) {
+    .timeline-list > .date-badge {
+        left: calc(18px + 36px + 12px + 10px);
+        margin-top: -24px;
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+}
+
+/* Empty Timeline State */
+.empty-timeline {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.empty-timeline .empty-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #F8EDE3;
+    color: var(--primary-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 16px;
+}
+
+.empty-timeline h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin: 0 0 8px;
+}
+
+.empty-timeline p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.empty-timeline .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Timeline List */
+.timeline-list {
+    position: relative;
+    padding-left: 0;
+}
+
+/* Timeline Item - Flex container con nodo + tarjeta */
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+/* Nodo circular (icono) - CRÍTICO: flex-shrink: 0, SIN position:absolute */
+.timeline-node {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.timeline-node i {
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+.timeline-node.paseo { background-color: #2D5A27; }
+.timeline-node.comida { background-color: #B84A12; }
+.timeline-node.descanso { background-color: #1D3B58; }
+.timeline-node.check-in { background-color: #6B3A7B; }
+.timeline-node.check-out { background-color: #6B3A7B; }
+.timeline-node.medicina { background-color: #2B2B2B; }
+
+.timeline-node i {
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+/* Tarjeta de la actividad */
+.timeline-card {
+    flex: 1;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.card-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 10px;
+}
+
+.card-type.paseo { background: #E8F5E9; color: #2D5A27; }
+.card-type.comida { background: #FFF3E0; color: #B84A12; }
+.card-type.descanso { background: #E8EBF5; color: #1D3B58; }
+.card-type.check-in { background: #F3EDF7; color: #6B3A7B; }
+.card-type.check-out { background: #F3EDF7; color: #6B3A7B; }
+.card-type.medicina { background: #EDEDED; color: #2B2B2B; }
+
+.card-type i {
+    font-size: 0.7rem;
+}
+
+.card-time {
+    font-size: 0.75rem;
+    color: #999;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.card-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #5C2518;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .timeline-container {
+        padding: 0;
+    }
+    
+    .timeline-container::before {
+        left: 18px;
+    }
+    
+    .timeline-item {
+        gap: 12px;
+    }
+    
+    .timeline-node {
+        min-width: 36px;
+        width: 36px;
+        height: 36px;
+    }
+    
+    .timeline-node i {
+        font-size: 18px;
+    }
+    
+    .timeline-card {
+        padding: 10px 14px;
+    }
+    
+    .card-header {
+        gap: 8px;
+    }
+    
+    .card-type {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+    
+    .card-time {
+        font-size: 0.7rem;
+    }
+    
+    .card-label {
+        font-size: 0.9rem;
+    }
+}

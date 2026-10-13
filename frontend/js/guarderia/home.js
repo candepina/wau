@@ -76,9 +76,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             ` : ""}
 
             <div class="guest-actions">
-              <button class="btn-guest-action primary" onclick="alert('Próximamente: Cargar actividad para estadía #${estadia.id}')">
-                <i class="fa-solid fa-plus"></i> Actividad
-              </button>
+              <a href="timeline.html?id=${estadia.id}" class="btn-guest-action primary">
+                <i class="fa-solid fa-clock-rotate-left"></i> Timeline
+              </a>
               <button class="btn-guest-action danger" onclick="finalizarEstadia(${estadia.id}, '${estadia.nombreMascota}')">
                 <i class="fa-solid fa-right-from-bracket"></i> Finalizar
               </button>
