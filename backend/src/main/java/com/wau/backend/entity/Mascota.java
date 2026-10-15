@@ -18,7 +18,7 @@ public class Mascota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Código único público estilo patente (ej: "AC909YV" o "WAU-482K")
+    // Código único público (ej "WAU-482K")
     @Column(nullable = false, unique = true, length = 20)
     private String codigo;
 
