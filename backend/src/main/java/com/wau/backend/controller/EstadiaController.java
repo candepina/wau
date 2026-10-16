@@ -39,6 +39,12 @@ public class EstadiaController {
         return ResponseEntity.ok(activas);
     }
 
+    @GetMapping
+    public ResponseEntity<List<EstadiaResponse>> listarMisEstadias(Authentication authentication) {
+        String email = authentication.getName();
+        return ResponseEntity.ok(estadiaService.listarMisEstadias(email));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<EstadiaResponse> obtenerEstadia(
             @PathVariable Long id,

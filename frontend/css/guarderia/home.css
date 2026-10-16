@@ -111,6 +111,11 @@
     color: var(--icon-green);
 }
 
+.badge-programada {
+    background-color: #FFF8E1;
+    color: #B7791F;
+}
+
 /* Notas de recepción */
 .guest-notes {
     background-color: #FAF6F0;

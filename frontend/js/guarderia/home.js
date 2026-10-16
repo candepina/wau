@@ -21,10 +21,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const emptyGuestsState = document.getElementById("emptyGuestsState");
     const guestCounter = document.getElementById("guestCounter");
 
-    // Función reutilizable para obtener huéspedes activos
+    // Función reutilizable para obtener huéspedes (activas + programadas)
     async function cargarEstadiasActivas() {
         try {
-            const response = await fetch("http://localhost:8080/api/estadias/activas", {
+            const response = await fetch("http://localhost:8080/api/estadias", {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
@@ -46,9 +46,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (estadias && estadias.length > 0) {
                 emptyGuestsState.style.display = "none";
                 guestsContainer.style.display = "flex";
-                guestCounter.textContent = `${estadias.length} ${estadias.length === 1 ? "perro hospedado" : "perros hospedados"}`;
+                const activas = estadias.filter(e => e.estado === "ACTIVA").length;
+                const programadas = estadias.filter(e => e.estado === "PROGRAMADA").length;
+                guestCounter.textContent = `${activas} ${activas === 1 ? "perro hospedado" : "perros hospedados"}${programadas > 0 ? ` + ${programadas} programada${programadas === 1 ? "" : "s"}` : ""}`;
 
-                guestsContainer.innerHTML = estadias.map(estadia => `
+                guestsContainer.innerHTML = estadias.map(estadia => {
+                const esProgramada = estadia.estado === "PROGRAMADA";
+                return `
           <article class="guest-card" id="estadia-${estadia.id}">
             <div class="guest-card-header">
               <div class="guest-avatar">
@@ -61,9 +65,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
 
             <div class="guest-badges">
+              ${esProgramada ? `
+              <span class="guest-badge badge-programada">
+                <i class="fa-solid fa-clock"></i> Programada
+              </span>` : `
               <span class="guest-badge badge-active">
                 <i class="fa-solid fa-circle-dot"></i> Activo
-              </span>
+              </span>`}
               <span class="guest-badge">
                 <i class="fa-regular fa-calendar"></i> Ingreso: ${estadia.fechaInicio}
               </span>
@@ -80,11 +88,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <i class="fa-solid fa-clock-rotate-left"></i> Timeline
               </a>
               <button class="btn-guest-action danger" onclick="finalizarEstadia(${estadia.id}, '${estadia.nombreMascota}')">
-                <i class="fa-solid fa-right-from-bracket"></i> Finalizar
+                <i class="fa-solid fa-right-from-bracket"></i> ${esProgramada ? "Cancelar" : "Finalizar"}
               </button>
             </div>
           </article>
-        `).join("");
+        `}).join("");
 
             } else {
                 guestsContainer.style.display = "none";

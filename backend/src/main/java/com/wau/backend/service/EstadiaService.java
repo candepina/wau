@@ -80,6 +80,34 @@ public class EstadiaService {
                 .collect(Collectors.toList());
     }
 
+    public List<EstadiaResponse> listarMisEstadias(String emailGuarderia) {
+        Usuario usuario = usuarioRepository.findByEmail(emailGuarderia)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        promoverVencidasGuarderia(usuario.getId());
+
+        List<EstadiaResponse> activas = estadiaRepository
+                .findByGuarderiaIdAndEstado(usuario.getId(), EstadoEstadia.ACTIVA)
+                .stream().map(this::mapearADTO).collect(Collectors.toList());
+        List<EstadiaResponse> programadas = estadiaRepository
+                .findByGuarderiaIdAndEstado(usuario.getId(), EstadoEstadia.PROGRAMADA)
+                .stream().map(this::mapearADTO).collect(Collectors.toList());
+
+        activas.sort((a, b) -> {
+            if (a.getFechaInicio() == null) return 1;
+            if (b.getFechaInicio() == null) return -1;
+            return a.getFechaInicio().compareTo(b.getFechaInicio());
+        });
+        programadas.sort((a, b) -> {
+            if (a.getFechaInicio() == null) return 1;
+            if (b.getFechaInicio() == null) return -1;
+            return a.getFechaInicio().compareTo(b.getFechaInicio());
+        });
+
+        activas.addAll(programadas);
+        return activas;
+    }
+
     public List<ActividadResponse> listarActividades(Long estadiaId, String emailGuarderia) {
         Estadia estadia = estadiaRepository.findById(estadiaId)
                 .orElseThrow(() -> new RuntimeException("Estadía no encontrada con ID: " + estadiaId));
