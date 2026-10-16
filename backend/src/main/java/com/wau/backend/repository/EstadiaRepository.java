@@ -5,6 +5,7 @@ import com.wau.backend.entity.EstadoEstadia;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -23,4 +24,9 @@ public interface EstadiaRepository extends JpaRepository<Estadia, Long> {
 
     // Verificar si una guardería tiene estadías activas
     boolean existsByGuarderiaIdAndEstado(Long guarderiaId, EstadoEstadia estado);
+
+    // Promoción PROGRAMADA -> ACTIVA: vencidas por fecha de inicio
+    List<Estadia> findByEstadoAndFechaInicioLessThanEqual(EstadoEstadia estado, LocalDate fecha);
+
+    List<Estadia> findByGuarderiaIdAndEstadoAndFechaInicioLessThanEqual(Long guarderiaId, EstadoEstadia estado, LocalDate fecha);
 }

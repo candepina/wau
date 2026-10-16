@@ -107,8 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const response = await fetch(`http://localhost:8080/api/estadias/${id}/finalizar`, {
                 method: "PATCH",
                 headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
+                    "Authorization": `Bearer ${token}`
                 }
             });
 

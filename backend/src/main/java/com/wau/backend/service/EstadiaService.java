@@ -17,6 +17,7 @@ import com.wau.backend.repository.MascotaRepository;
 import com.wau.backend.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,7 +58,11 @@ public class EstadiaService {
         estadia.setFechaInicio(request.getFechaInicio());
         estadia.setFechaFin(request.getFechaFin());
         estadia.setNotasIngreso(request.getNotasIngreso());
-        estadia.setEstado(EstadoEstadia.ACTIVA);
+        if (request.getFechaInicio() != null && request.getFechaInicio().isAfter(LocalDate.now())) {
+            estadia.setEstado(EstadoEstadia.PROGRAMADA);
+        } else {
+            estadia.setEstado(EstadoEstadia.ACTIVA);
+        }
 
         Estadia guardada = estadiaRepository.save(estadia);
         return mapearADTO(guardada);
@@ -66,6 +71,8 @@ public class EstadiaService {
     public List<EstadiaResponse> listarEstadiasActivas(String emailGuarderia) {
         Usuario usuario = usuarioRepository.findByEmail(emailGuarderia)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        promoverVencidasGuarderia(usuario.getId());
 
         return estadiaRepository.findByGuarderiaIdAndEstado(usuario.getId(), EstadoEstadia.ACTIVA)
                 .stream()
@@ -78,6 +85,7 @@ public class EstadiaService {
                 .orElseThrow(() -> new RuntimeException("Estadía no encontrada con ID: " + estadiaId));
 
         validarPertenenciaGuarderia(estadia, emailGuarderia);
+        estadia = promoverSiVencida(estadia);
 
         return actividadRepository.findByEstadiaIdOrderByFechaHoraDesc(estadiaId)
                 .stream()
@@ -90,6 +98,13 @@ public class EstadiaService {
                 .orElseThrow(() -> new RuntimeException("Estadía no encontrada con ID: " + estadiaId));
 
         validarPertenenciaGuarderia(estadia, emailGuarderia);
+        estadia = promoverSiVencida(estadia);
+
+        // El CHECK_IN marca la apertura real aunque la fecha planificada sea futura
+        if (request.getTipo() == TipoActividad.CHECK_IN && estadia.estaProgramada()) {
+            estadia.activar();
+            estadia = estadiaRepository.save(estadia);
+        }
 
         // Validar CHECK_IN y CHECK_OUT únicos por estadía
         if (request.getTipo() == TipoActividad.CHECK_IN) {
@@ -121,11 +136,34 @@ public class EstadiaService {
         }
     }
 
+    private Estadia promoverSiVencida(Estadia estadia) {
+        if (estadia.estaProgramada()
+                && estadia.getFechaInicio() != null
+                && !estadia.getFechaInicio().isAfter(LocalDate.now())) {
+            estadia.activar();
+            return estadiaRepository.save(estadia);
+        }
+        return estadia;
+    }
+
+    private void promoverVencidasGuarderia(Long guarderiaId) {
+        List<Estadia> vencidas = estadiaRepository
+                .findByGuarderiaIdAndEstadoAndFechaInicioLessThanEqual(
+                        guarderiaId, EstadoEstadia.PROGRAMADA, LocalDate.now());
+        for (Estadia e : vencidas) {
+            e.activar();
+        }
+        if (!vencidas.isEmpty()) {
+            estadiaRepository.saveAll(vencidas);
+        }
+    }
+
     public EstadiaResponse obtenerEstadiaPorId(Long estadiaId, String emailGuarderia) {
         Estadia estadia = estadiaRepository.findById(estadiaId)
                 .orElseThrow(() -> new RuntimeException("Estadía no encontrada con ID: " + estadiaId));
 
         validarPertenenciaGuarderia(estadia, emailGuarderia);
+        estadia = promoverSiVencida(estadia);
 
         return mapearADTO(estadia);
     }
@@ -168,6 +206,7 @@ public class EstadiaService {
             throw new RuntimeException("No tenés permiso para modificar esta estadía");
         }
 
+        estadia = promoverSiVencida(estadia);
         estadia.finalizar();
 
         Estadia guardada = estadiaRepository.save(estadia);
@@ -179,6 +218,7 @@ public class EstadiaService {
                 .orElseThrow(() -> new RuntimeException("Estadía no encontrada con ID: " + estadiaId));
 
         validarPertenenciaGuarderia(estadia, emailGuarderia);
+        estadia = promoverSiVencida(estadia);
 
         if (estadia.getEstado() == EstadoEstadia.FINALIZADA) {
             throw new RuntimeException("No se puede modificar una estadía finalizada");

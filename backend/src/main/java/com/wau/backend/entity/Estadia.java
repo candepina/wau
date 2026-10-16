@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "estadias")
@@ -40,8 +41,29 @@ public class Estadia {
     @JoinColumn(name = "guarderia_id", nullable = false)
     private Guarderia guarderia;
 
+    @Column(updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.fechaCreacion == null) {
+            this.fechaCreacion = LocalDateTime.now();
+        }
+    }
+
     public boolean estaActiva() {
         return this.estado == EstadoEstadia.ACTIVA;
+    }
+
+    public boolean estaProgramada() {
+        return this.estado == EstadoEstadia.PROGRAMADA;
+    }
+
+    public void activar() {
+        if (this.estado == EstadoEstadia.FINALIZADA) {
+            throw new RuntimeException("No se puede activar una estadía finalizada");
+        }
+        this.estado = EstadoEstadia.ACTIVA;
     }
 
     public void finalizar() {
