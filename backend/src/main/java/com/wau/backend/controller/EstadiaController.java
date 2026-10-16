@@ -76,4 +76,14 @@ public class EstadiaController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<EstadiaResponse> actualizarEstadia(
+            @PathVariable Long id,
+            @Valid @RequestBody EstadiaRequest request,
+            Authentication authentication) {
+        String email = authentication.getName();
+        EstadiaResponse response = estadiaService.actualizarEstadia(id, request, email);
+        return ResponseEntity.ok(response);
+    }
+
 }

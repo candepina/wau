@@ -3,7 +3,9 @@ package com.wau.backend.service;
 import com.wau.backend.dto.MascotaRequest;
 import com.wau.backend.dto.MascotaResponse;
 import com.wau.backend.entity.Dueno;
+import com.wau.backend.entity.EstadoEstadia;
 import com.wau.backend.entity.Mascota;
+import com.wau.backend.entity.TamanoMascota;
 import com.wau.backend.entity.Usuario;
 import com.wau.backend.exception.MascotaConEstadiaActivaException;
 import com.wau.backend.exception.MascotaNotFoundException;
@@ -42,7 +44,7 @@ public class MascotaService {
         mascota.setNombre(request.getNombre());
         mascota.setRaza(request.getRaza());
         mascota.setEdad(request.getEdad());
-        mascota.setTamano(request.getTamano());
+        mascota.setTamano(parseTamano(request.getTamano()));
         mascota.setObservacionesMedicas(request.getObservacionesMedicas());
         mascota.setObservacionesConductuales(request.getObservacionesConductuales());
         mascota.setObservacionesGenerales(request.getObservacionesGenerales());
@@ -73,7 +75,7 @@ public class MascotaService {
         mascota.setNombre(request.getNombre());
         mascota.setRaza(request.getRaza());
         mascota.setEdad(request.getEdad());
-        mascota.setTamano(request.getTamano());
+        mascota.setTamano(parseTamano(request.getTamano()));
         mascota.setObservacionesMedicas(request.getObservacionesMedicas());
         mascota.setObservacionesConductuales(request.getObservacionesConductuales());
         mascota.setObservacionesGenerales(request.getObservacionesGenerales());
@@ -89,7 +91,7 @@ public class MascotaService {
             throw new AccessDeniedException("No tenés permiso para eliminar esta mascota.");
         }
 
-        if (estadiaRepository.existsByMascotaIdAndEstado(id, "ACTIVA")) {
+        if (estadiaRepository.existsByMascotaIdAndEstado(id, EstadoEstadia.ACTIVA)) {
             throw new MascotaConEstadiaActivaException();
         }
 
@@ -125,6 +127,17 @@ public class MascotaService {
         return codigoGenerado;
     }
 
+    private TamanoMascota parseTamano(String tamano) {
+        if (tamano == null || tamano.isBlank()) {
+            return null;
+        }
+        try {
+            return TamanoMascota.valueOf(tamano.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Tamaño de mascota inválido: " + tamano + ". Valores válidos: PEQUENO, MEDIANO, GRANDE");
+        }
+    }
+
 
     private MascotaResponse mapearADTO(Mascota mascota) {
         return new MascotaResponse(
@@ -133,7 +146,7 @@ public class MascotaService {
                 mascota.getNombre(),
                 mascota.getRaza(),
                 mascota.getEdad(),
-                mascota.getTamano(),
+                mascota.getTamano() != null ? mascota.getTamano().name() : null,
                 mascota.getObservacionesMedicas(),
                 mascota.getObservacionesConductuales(),
                 mascota.getObservacionesGenerales(),

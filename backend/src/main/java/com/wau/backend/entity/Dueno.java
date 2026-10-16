@@ -31,4 +31,14 @@ public class Dueno extends Usuario {
 
     @OneToMany(mappedBy = "dueno", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Mascota> mascotas = new ArrayList<>();
+
+    public void agregarMascota(Mascota mascota) {
+        mascotas.add(mascota);
+        mascota.setDueno(this);
+    }
+
+    public void removerMascota(Mascota mascota) {
+        mascotas.remove(mascota);
+        mascota.setDueno(null);
+    }
 }

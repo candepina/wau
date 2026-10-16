@@ -3,6 +3,7 @@ package com.wau.backend.service;
 import com.wau.backend.dto.PerfilRequest;
 import com.wau.backend.dto.PerfilResponse;
 import com.wau.backend.entity.Dueno;
+import com.wau.backend.entity.EstadoEstadia;
 import com.wau.backend.entity.Guarderia;
 import com.wau.backend.entity.Mascota;
 import com.wau.backend.entity.Usuario;
@@ -100,7 +101,7 @@ public class UsuarioService {
             // El cascade + orphanRemoval se encarga de borrar las mascotas
         } else if (usuario instanceof Guarderia guarderia) {
             // Validar: NO hay estadías ACTIVAS en esta guardería
-            if (estadiaRepository.existsByGuarderiaIdAndEstado(guarderia.getId(), "ACTIVA")) {
+            if (estadiaRepository.existsByGuarderiaIdAndEstado(guarderia.getId(), EstadoEstadia.ACTIVA)) {
                 throw new UsuarioConEstadiasActivasException(
                     "No se puede eliminar la cuenta porque la guardería tiene huéspedes activos"
                 );
@@ -112,7 +113,7 @@ public class UsuarioService {
 
     private boolean mascotasDeDuenoConEstadiaActiva(Long duenoId) {
         // Buscar si existe alguna estadía ACTIVA donde la mascota pertenece al dueño
-        return estadiaRepository.existsByMascotaDuenoIdAndEstado(duenoId, "ACTIVA");
+        return estadiaRepository.existsByMascotaDuenoIdAndEstado(duenoId, EstadoEstadia.ACTIVA);
     }
 
     private void actualizarDueno(Dueno dueno, PerfilRequest request) {

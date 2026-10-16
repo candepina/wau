@@ -29,7 +29,8 @@ public class Mascota {
 
     private Integer edad;
 
-    private String tamano; // "PEQUENO", "MEDIANO", "GRANDE"
+    @Enumerated(EnumType.STRING)
+    private TamanoMascota tamano;
 
     @Column(length = 1000)
     private String observacionesMedicas;

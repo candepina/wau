@@ -25,8 +25,9 @@ public class Estadia {
 
     private LocalDate fechaFin;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String estado; // "ACTIVA", "FINALIZADA"
+    private EstadoEstadia estado;
 
     @Column(length = 1000)
     private String notasIngreso; // Pertenencias con las que ingresa, indicaciones puntuales
@@ -38,4 +39,16 @@ public class Estadia {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "guarderia_id", nullable = false)
     private Guarderia guarderia;
+
+    public boolean estaActiva() {
+        return this.estado == EstadoEstadia.ACTIVA;
+    }
+
+    public void finalizar() {
+        if (this.estado == EstadoEstadia.FINALIZADA) {
+            throw new RuntimeException("Esta estadía ya se encuentra finalizada");
+        }
+        this.estado = EstadoEstadia.FINALIZADA;
+        this.fechaFin = LocalDate.now();
+    }
 }

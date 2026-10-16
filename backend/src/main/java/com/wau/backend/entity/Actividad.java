@@ -30,4 +30,12 @@ public class Actividad {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estadia_id", nullable = false)
     private Estadia estadia;
+
+    public boolean esCheckOut() {
+        return this.tipo == TipoActividad.CHECK_OUT;
+    }
+
+    public boolean esCheckIn() {
+        return this.tipo == TipoActividad.CHECK_IN;
+    }
 }

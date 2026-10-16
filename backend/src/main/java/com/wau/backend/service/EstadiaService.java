@@ -6,6 +6,7 @@ import com.wau.backend.dto.EstadiaRequest;
 import com.wau.backend.dto.EstadiaResponse;
 import com.wau.backend.entity.Actividad;
 import com.wau.backend.entity.Estadia;
+import com.wau.backend.entity.EstadoEstadia;
 import com.wau.backend.entity.Guarderia;
 import com.wau.backend.entity.Mascota;
 import com.wau.backend.entity.TipoActividad;
@@ -56,7 +57,7 @@ public class EstadiaService {
         estadia.setFechaInicio(request.getFechaInicio());
         estadia.setFechaFin(request.getFechaFin());
         estadia.setNotasIngreso(request.getNotasIngreso());
-        estadia.setEstado("ACTIVA");
+        estadia.setEstado(EstadoEstadia.ACTIVA);
 
         Estadia guardada = estadiaRepository.save(estadia);
         return mapearADTO(guardada);
@@ -66,7 +67,7 @@ public class EstadiaService {
         Usuario usuario = usuarioRepository.findByEmail(emailGuarderia)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        return estadiaRepository.findByGuarderiaIdAndEstado(usuario.getId(), "ACTIVA")
+        return estadiaRepository.findByGuarderiaIdAndEstado(usuario.getId(), EstadoEstadia.ACTIVA)
                 .stream()
                 .map(this::mapearADTO)
                 .collect(Collectors.toList());
@@ -138,7 +139,7 @@ public class EstadiaService {
                 estadia.getMascota().getDueno().getNombre(),
                 estadia.getFechaInicio(),
                 estadia.getFechaFin(),
-                estadia.getEstado(),
+                estadia.getEstado() != null ? estadia.getEstado().name() : null,
                 estadia.getNotasIngreso()
         );
     }
@@ -167,12 +168,31 @@ public class EstadiaService {
             throw new RuntimeException("No tenés permiso para modificar esta estadía");
         }
 
-        if ("FINALIZADA".equalsIgnoreCase(estadia.getEstado())) {
-            throw new RuntimeException("Esta estadía ya se encuentra finalizada");
+        estadia.finalizar();
+
+        Estadia guardada = estadiaRepository.save(estadia);
+        return mapearADTO(guardada);
+    }
+
+    public EstadiaResponse actualizarEstadia(Long estadiaId, EstadiaRequest request, String emailGuarderia) {
+        Estadia estadia = estadiaRepository.findById(estadiaId)
+                .orElseThrow(() -> new RuntimeException("Estadía no encontrada con ID: " + estadiaId));
+
+        validarPertenenciaGuarderia(estadia, emailGuarderia);
+
+        if (estadia.getEstado() == EstadoEstadia.FINALIZADA) {
+            throw new RuntimeException("No se puede modificar una estadía finalizada");
         }
 
-        estadia.setEstado("FINALIZADA");
-        estadia.setFechaFin(java.time.LocalDate.now()); // Registra la fecha de egreso efectiva
+        if (request.getFechaInicio() != null) {
+            estadia.setFechaInicio(request.getFechaInicio());
+        }
+        if (request.getFechaFin() != null) {
+            estadia.setFechaFin(request.getFechaFin());
+        }
+        if (request.getNotasIngreso() != null) {
+            estadia.setNotasIngreso(request.getNotasIngreso());
+        }
 
         Estadia guardada = estadiaRepository.save(estadia);
         return mapearADTO(guardada);
