@@ -25,6 +25,11 @@ public interface EstadiaRepository extends JpaRepository<Estadia, Long> {
     // Verificar si una guardería tiene estadías activas
     boolean existsByGuarderiaIdAndEstado(Long guarderiaId, EstadoEstadia estado);
 
+    // Timeline del dueño: estadías por mascota y estado
+    java.util.List<Estadia> findByMascotaIdAndEstado(Long mascotaId, EstadoEstadia estado);
+
+    java.util.Optional<Estadia> findFirstByMascotaIdAndEstadoOrderByFechaInicioAsc(Long mascotaId, EstadoEstadia estado);
+
     // Promoción PROGRAMADA -> ACTIVA: vencidas por fecha de inicio
     List<Estadia> findByEstadoAndFechaInicioLessThanEqual(EstadoEstadia estado, LocalDate fecha);
 

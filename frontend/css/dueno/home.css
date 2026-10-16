@@ -116,6 +116,10 @@
 
 .icon-walk { background-color: var(--icon-green); }
 .icon-food { background-color: var(--icon-brown); }
+.icon-rest { background-color: #1D3B58; }
+.icon-checkin { background-color: #6B3A7B; }
+.icon-checkout { background-color: #6B3A7B; }
+.icon-med { background-color: #2B2B2B; }
 
 .timeline-text {
     display: flex;

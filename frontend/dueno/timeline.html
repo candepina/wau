@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau - Actualizaciones de mi mascota</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/guarderia/timeline.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+    <header class="top-bar-form">
+        <a href="home.html" class="btn-back" aria-label="Volver">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="logo-small">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau</span>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="timeline-header">
+            <div class="timeline-header-info">
+                <h1 class="timeline-title" id="timelineTitle">Actualizaciones</h1>
+                <p id="timelineSubtitle" style="display: none;"></p>
+            </div>
+        </section>
+
+        <section class="timeline-container" id="timelineContainer">
+            <div class="empty-timeline" id="emptyTimeline" style="display: none;">
+                <div class="empty-icon-wrapper">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <h3>No hay actividades registradas</h3>
+                <p>La guardería todavía no cargó novedades de esta estadía.</p>
+            </div>
+
+            <div class="timeline-list" id="timelineList" style="display: none;"></div>
+        </section>
+    </main>
+
+</div>
+
+<script src="../js/dueno/timeline.js"></script>
+</body>
+</html>

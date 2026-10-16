@@ -23,6 +23,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     const emptyGallery = document.getElementById("emptyGallery");
     const linkVerGaleria = document.getElementById("linkVerGaleria");
 
+    const TITULOS_ACTIVIDAD = {
+        CHECK_IN: "Check-in",
+        PASEO: "Paseo",
+        COMIDA: "Comida",
+        DESCANSO: "Descanso",
+        MEDICINA: "Medicina",
+        CHECK_OUT: "Check-out"
+    };
+
+    const ICONOS_ACTIVIDAD = {
+        CHECK_IN: { cls: "icon-checkin", icon: "fa-heart" },
+        PASEO: { cls: "icon-walk", icon: "fa-person-walking" },
+        COMIDA: { cls: "icon-food", icon: "fa-utensils" },
+        DESCANSO: { cls: "icon-rest", icon: "fa-bed" },
+        MEDICINA: { cls: "icon-med", icon: "fa-pills" },
+        CHECK_OUT: { cls: "icon-checkout", icon: "fa-door-closed" }
+    };
+
     try {
         const response = await fetch("http://localhost:8080/api/mascotas", {
             method: "GET",
@@ -50,9 +68,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             petActivitySection.style.display = "block";
             emptyPetCard.style.display = "none";
 
-            // 2. Evaluar Actualizaciones (por ahora simulamos vacío hasta crear la entidad en el backend)
-            const actualizaciones = []; // Vendrá de la API más adelante
-            renderActualizaciones(actualizaciones);
+            // 2. Últimas actualizaciones reales: primera mascota con estadía
+            await cargarUltimasActualizaciones(mascotas);
 
             // 3. Evaluar Galería de Fotos (simulamos vacío)
             const fotos = []; // Vendrá de la API más adelante
@@ -69,25 +86,80 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Error al conectar con la API de mascotas:", error);
     }
 
+    function setLinkVerTodas(estadiaId) {
+        if (estadiaId) {
+            linkVerActualizaciones.href = `timeline.html?estadiaId=${estadiaId}`;
+            linkVerActualizaciones.style.display = "inline";
+        } else {
+            linkVerActualizaciones.removeAttribute("href");
+            linkVerActualizaciones.style.display = "none";
+        }
+    }
+
+    async function buscarEstadiaActual(mascotas) {
+        for (const m of mascotas) {
+            try {
+                const res = await fetch(`http://localhost:8080/api/dueno/mascotas/${m.id}/estadia-actual`, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                if (res.ok) return await res.json();
+            } catch (error) {
+                console.error(`Error al buscar estadía de mascota ${m.id}:`, error);
+            }
+        }
+        return null;
+    }
+
+    async function cargarUltimasActualizaciones(mascotas) {
+        try {
+            const estadia = await buscarEstadiaActual(mascotas);
+            if (!estadia) {
+                setLinkVerTodas(null);
+                renderActualizaciones([]);
+                return;
+            }
+            setLinkVerTodas(estadia.id);
+
+            const resActs = await fetch(`http://localhost:8080/api/dueno/estadias/${estadia.id}/actividades`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            if (!resActs.ok) {
+                renderActualizaciones([]);
+                return;
+            }
+            const actividades = await resActs.json();
+            const ultimas = (actividades || []).slice(0, 3).map(a => ({
+                tipo: a.tipo,
+                titulo: TITULOS_ACTIVIDAD[a.tipo] || a.tipo,
+                hora: new Date(a.fechaHora).toLocaleString("es-AR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })
+            }));
+            renderActualizaciones(ultimas);
+        } catch (error) {
+            console.error("Error al cargar actualizaciones:", error);
+            setLinkVerTodas(null);
+            renderActualizaciones([]);
+        }
+    }
+
     function renderActualizaciones(items) {
         if (items && items.length > 0) {
             emptyUpdates.style.display = "none";
-            linkVerActualizaciones.style.display = "inline";
             timelineList.style.display = "flex";
-            timelineList.innerHTML = items.map(item => `
+            timelineList.innerHTML = items.map(item => {
+        const conf = ICONOS_ACTIVIDAD[item.tipo] || { cls: "icon-food", icon: "fa-utensils" };
+        return `
         <div class="timeline-item">
-          <div class="timeline-icon ${item.tipo === 'PASEO' ? 'icon-walk' : 'icon-food'}">
-            <i class="fa-solid ${item.tipo === 'PASEO' ? 'fa-person-walking' : 'fa-utensils'}"></i>
+          <div class="timeline-icon ${conf.cls}">
+            <i class="fa-solid ${conf.icon}"></i>
           </div>
           <div class="timeline-text">
             <strong>${item.titulo}</strong>
             <small>${item.hora}</small>
           </div>
         </div>
-      `).join("");
+      `}).join("");
         } else {
             emptyUpdates.style.display = "flex";
-            linkVerActualizaciones.style.display = "none";
             timelineList.style.display = "none";
         }
     }

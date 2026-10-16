@@ -265,4 +265,40 @@ public class EstadiaService {
         Estadia guardada = estadiaRepository.save(estadia);
         return mapearADTO(guardada);
     }
+
+    private void validarPertenenciaDueno(Estadia estadia, String emailDueno) {
+        if (estadia.getMascota() == null
+                || estadia.getMascota().getDueno() == null
+                || !estadia.getMascota().getDueno().getEmail().equals(emailDueno)) {
+            throw new RuntimeException("No tenés permiso para ver esta estadía");
+        }
+    }
+
+    public EstadiaResponse obtenerEstadiaActualDeMiMascota(Long mascotaId, String emailDueno) {
+        Mascota mascota = mascotaRepository.findById(mascotaId)
+                .orElseThrow(() -> new RuntimeException("Mascota no encontrada con ID: " + mascotaId));
+
+        if (mascota.getDueno() == null || !mascota.getDueno().getEmail().equals(emailDueno)) {
+            throw new RuntimeException("No tenés permiso para ver esta mascota");
+        }
+
+        return estadiaRepository.findFirstByMascotaIdAndEstadoOrderByFechaInicioAsc(mascotaId, EstadoEstadia.ACTIVA)
+                .map(e -> mapearADTO(promoverSiVencida(e)))
+                .or(() -> estadiaRepository.findFirstByMascotaIdAndEstadoOrderByFechaInicioAsc(mascotaId, EstadoEstadia.PROGRAMADA)
+                        .map(e -> mapearADTO(promoverSiVencida(e))))
+                .orElseThrow(() -> new RuntimeException("No hay estadía activa para esta mascota"));
+    }
+
+    public java.util.List<ActividadResponse> listarActividadesParaDueno(Long estadiaId, String emailDueno) {
+        Estadia estadia = estadiaRepository.findById(estadiaId)
+                .orElseThrow(() -> new RuntimeException("Estadía no encontrada con ID: " + estadiaId));
+
+        validarPertenenciaDueno(estadia, emailDueno);
+        promoverSiVencida(estadia);
+
+        return actividadRepository.findByEstadiaIdOrderByFechaHoraDesc(estadiaId)
+                .stream()
+                .map(this::mapearActividadADTO)
+                .collect(Collectors.toList());
+    }
 }
