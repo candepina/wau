@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -15,6 +16,9 @@ public interface EstadiaRepository extends JpaRepository<Estadia, Long> {
 
     // Listar todas las estadías de una guardería
     List<Estadia> findByGuarderiaId(Long guarderiaId);
+
+    // Verificar si una guardería tiene (hoy) una estadía activa o programada de una mascota
+    boolean existsByGuarderiaIdAndMascotaIdAndEstadoIn(Long guarderiaId, Long mascotaId, Collection<EstadoEstadia> estados);
 
     // Verificar si una mascota tiene estadía activa
     boolean existsByMascotaIdAndEstado(Long mascotaId, EstadoEstadia estado);

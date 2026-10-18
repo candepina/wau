@@ -63,6 +63,28 @@
     gap: 14px;
 }
 
+/* Header entero clicable → abre la ficha de la mascota */
+a.guest-card-header {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    padding: 6px;
+    margin: -6px;
+    transition: background-color 0.2s;
+}
+
+a.guest-card-header:hover {
+    background-color: #FAF6F0;
+}
+
+.guest-header-chevron {
+    margin-left: auto;
+    color: #B5A79C;
+    font-size: 0.9rem;
+    align-self: center;
+}
+
 .guest-avatar {
     width: 52px;
     height: 52px;
@@ -148,6 +170,7 @@
     justify-content: center;
     gap: 6px;
     cursor: pointer;
+    text-decoration: none;
     transition: background-color 0.2s;
 }
 
@@ -158,6 +181,7 @@
 .btn-guest-action.primary {
     background-color: #FAD3B2;
     color: #8C4724;
+    text-decoration: none;
 }
 
 .btn-guest-action.primary:hover {

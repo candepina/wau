@@ -1,0 +1,201 @@
+/* Ficha de mascota para guardería — basada en el formato de dueno/detalle-mascota.css */
+
+.top-bar-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+}
+
+.btn-back {
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.top-bar-spacer {
+    display: inline-block;
+    width: 32px;
+}
+
+.logo-small {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary-orange);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.form-title {
+    text-align: center;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    letter-spacing: 0.5px;
+    margin: 8px 0 18px 0;
+}
+
+.feedback-msg {
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.feedback-msg.error {
+    background-color: #F8D7DA;
+    color: #721C24;
+}
+
+.avatar-upload-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 22px;
+}
+
+.avatar-circle {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background-color: #E2D7CD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.default-avatar-icon {
+    font-size: 2.6rem;
+    color: #B5A79C;
+}
+
+/* Formulario en modo lectura (campos deshabilitados, igual al detalle del dueño) */
+.pet-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-bottom: 40px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.pet-form label {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.pet-form input,
+.pet-form textarea {
+    width: 100%;
+    background-color: #E7DDD3;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-md);
+    padding: 11px 14px;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    outline: none;
+    font-family: inherit;
+}
+
+.pet-form input:disabled,
+.pet-form textarea:disabled {
+    background-color: #f5f0eb;
+    color: var(--text-dark);
+}
+
+.pet-form textarea {
+    resize: none;
+}
+
+.section-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-top: 8px;
+    margin-bottom: 2px;
+}
+
+/* Tarjeta de contacto del dueño (mismo lenguaje que las notas de huésped) */
+.owner-contact-card {
+    background-color: #FAF6F0;
+    border-left: 3px solid var(--primary-orange);
+    padding: 12px 14px;
+    border-radius: 4px 8px 8px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.owner-contact-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.owner-contact-info i {
+    color: var(--primary-orange);
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.owner-contact-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 2px;
+}
+
+.owner-contact-actions a {
+    flex: 1;
+    background-color: #F8EDE3;
+    border: none;
+    color: var(--text-dark);
+    padding: 10px 12px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.owner-contact-actions a:hover {
+    background-color: #EBDDCE;
+}
+
+.owner-contact-actions a.primary {
+    background-color: #FAD3B2;
+    color: #8C4724;
+}
+
+.owner-contact-actions a.primary:hover {
+    background-color: #F5C196;
+}

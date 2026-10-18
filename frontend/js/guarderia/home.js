@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const esProgramada = estadia.estado === "PROGRAMADA";
                 return `
           <article class="guest-card" id="estadia-${estadia.id}">
-            <div class="guest-card-header">
+            <a href="detalle-mascota.html?id=${estadia.mascotaId}" class="guest-card-header">
               <div class="guest-avatar">
                 <i class="fa-solid fa-dog"></i>
               </div>
@@ -62,7 +62,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <h2>${estadia.nombreMascota}</h2>
                 <span>${estadia.razaMascota || "Mestizo"} • Dueño: ${estadia.nombreDueno}</span>
               </div>
-            </div>
+              <i class="fa-solid fa-chevron-right guest-header-chevron" aria-hidden="true"></i>
+            </a>
 
             <div class="guest-badges">
               ${esProgramada ? `
@@ -86,6 +87,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             <div class="guest-actions">
               <a href="timeline.html?id=${estadia.id}" class="btn-guest-action primary">
                 <i class="fa-solid fa-clock-rotate-left"></i> Timeline
+              </a>
+              <a href="detalle-mascota.html?id=${estadia.mascotaId}" class="btn-guest-action">
+                <i class="fa-solid fa-id-card"></i> Ficha
               </a>
               <button class="btn-guest-action danger" onclick="finalizarEstadia(${estadia.id}, '${estadia.nombreMascota}')">
                 <i class="fa-solid fa-right-from-bracket"></i> ${esProgramada ? "Cancelar" : "Finalizar"}

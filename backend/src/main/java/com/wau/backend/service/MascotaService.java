@@ -1,9 +1,11 @@
 package com.wau.backend.service;
 
+import com.wau.backend.dto.FichaMascotaGuarderiaResponse;
 import com.wau.backend.dto.MascotaRequest;
 import com.wau.backend.dto.MascotaResponse;
 import com.wau.backend.entity.Dueno;
 import com.wau.backend.entity.EstadoEstadia;
+import com.wau.backend.entity.Guarderia;
 import com.wau.backend.entity.Mascota;
 import com.wau.backend.entity.TamanoMascota;
 import com.wau.backend.entity.Usuario;
@@ -107,6 +109,43 @@ public class MascotaService {
         }
 
         return mapearADTO(mascota);
+    }
+
+    /**
+     * Ficha completa de una mascota para su guardería (solo lectura).
+     * Solo accesible si la mascota tiene una estadía ACTIVA o PROGRAMADA en esa guardería.
+     */
+    public FichaMascotaGuarderiaResponse obtenerFichaParaGuarderia(Long mascotaId, String emailGuarderia) {
+        Usuario usuario = usuarioRepository.findByEmail(emailGuarderia)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (!(usuario instanceof Guarderia guarderia)) {
+            throw new AccessDeniedException("Solo los usuarios con rol Guardería pueden ver la ficha de huéspedes");
+        }
+
+        if (!estadiaRepository.existsByGuarderiaIdAndMascotaIdAndEstadoIn(
+                guarderia.getId(), mascotaId, List.of(EstadoEstadia.ACTIVA, EstadoEstadia.PROGRAMADA))) {
+            throw new AccessDeniedException("No tenés acceso a la ficha de esta mascota.");
+        }
+
+        Mascota mascota = mascotaRepository.findById(mascotaId)
+                .orElseThrow(() -> new MascotaNotFoundException(mascotaId));
+
+        Dueno dueno = mascota.getDueno();
+
+        return new FichaMascotaGuarderiaResponse(
+                mascota.getId(),
+                mascota.getCodigo(),
+                mascota.getNombre(),
+                mascota.getRaza(),
+                mascota.getEdad(),
+                mascota.getTamano() != null ? mascota.getTamano().name() : null,
+                mascota.getObservacionesMedicas(),
+                mascota.getObservacionesConductuales(),
+                mascota.getObservacionesGenerales(),
+                dueno.getNombre() + " " + dueno.getApellido(),
+                dueno.getTelefono()
+        );
     }
 
     // Método auxiliar para generar código único estilo patente

@@ -1,5 +1,6 @@
 package com.wau.backend.controller;
 
+import com.wau.backend.dto.FichaMascotaGuarderiaResponse;
 import com.wau.backend.dto.MascotaRequest;
 import com.wau.backend.dto.MascotaResponse;
 import com.wau.backend.service.MascotaService;
@@ -43,6 +44,15 @@ public class MascotaController {
             Authentication authentication) {
         String email = authentication.getName();
         MascotaResponse response = mascotaService.obtenerMascotaPorId(id, email);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/ficha")
+    public ResponseEntity<FichaMascotaGuarderiaResponse> obtenerFichaGuarderia(
+            @PathVariable Long id,
+            Authentication authentication) {
+        String email = authentication.getName();
+        FichaMascotaGuarderiaResponse response = mascotaService.obtenerFichaParaGuarderia(id, email);
         return ResponseEntity.ok(response);
     }
 

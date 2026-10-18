@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wau - Ficha de Mascota</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/guarderia/detalle-mascota.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Top Bar con flecha de retorno -->
+    <header class="top-bar-form">
+        <a href="home.html" class="btn-back" aria-label="Volver">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="logo-small">
+            <i class="fa-solid fa-paw"></i>
+            <span>Wau</span>
+        </div>
+        <span class="top-bar-spacer" aria-hidden="true"></span>
+    </header>
+
+    <main class="main-content">
+        <h1 class="form-title" id="pageTitle">FICHA DE MASCOTA</h1>
+
+        <div id="formFeedback" class="feedback-msg" style="display: none;"></div>
+
+        <!-- Avatar circular -->
+        <div class="avatar-upload-container" id="avatarContainer" style="display: none;">
+            <div class="avatar-circle">
+                <i class="fa-solid fa-dog default-avatar-icon"></i>
+            </div>
+        </div>
+
+        <!-- Contenido de la ficha (visible sólo al cargar) -->
+        <form id="fichaMascotaForm" class="pet-form" style="display: none;" onsubmit="return false;">
+
+            <!-- Datos básicos -->
+            <div class="form-row">
+                <div class="form-group flex-2">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" disabled />
+                </div>
+                <div class="form-group flex-1">
+                    <label for="codigo">Código</label>
+                    <input type="text" id="codigo" name="codigo" disabled />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group flex-1">
+                    <label for="raza">Raza</label>
+                    <input type="text" id="raza" name="raza" disabled />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group flex-1">
+                    <label for="edad">Edad (años)</label>
+                    <input type="number" id="edad" name="edad" min="0" max="30" disabled />
+                </div>
+                <div class="form-group flex-1">
+                    <label for="tamano">Tamaño</label>
+                    <input type="text" id="tamano" name="tamano" disabled />
+                </div>
+            </div>
+
+            <!-- Salud y nutrición -->
+            <h3 class="section-title">Salud y nutrición</h3>
+            <div class="form-group">
+                <label for="alimentacion">Alimentación y horarios</label>
+                <textarea id="alimentacion" rows="3" disabled placeholder="El dueño no registró indicaciones de alimentación."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="alergias">Alergias</label>
+                <textarea id="alergias" rows="2" disabled placeholder="Sin alergias registradas."></textarea>
+            </div>
+
+            <!-- Medicación -->
+            <h3 class="section-title">Medicación</h3>
+            <div class="form-group">
+                <label for="medicacion">Medicación y horarios (si aplica)</label>
+                <textarea id="medicacion" rows="2" disabled placeholder="La mascota no requiere medicación registrada."></textarea>
+            </div>
+
+            <!-- Cuidados especiales / Conducta -->
+            <h3 class="section-title">Cuidados especiales</h3>
+            <div class="form-group">
+                <label for="conductuales">Observaciones (miedo a truenos, convivencia, etc.)</label>
+                <textarea id="conductuales" rows="3" disabled placeholder="Sin observaciones de conducta registradas."></textarea>
+            </div>
+
+            <!-- Contacto del dueño -->
+            <h3 class="section-title">Contacto del dueño</h3>
+            <div class="owner-contact-card">
+                <div class="owner-contact-info">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="duenoNombre">—</span>
+                </div>
+                <div class="owner-contact-info">
+                    <i class="fa-solid fa-phone"></i>
+                    <span id="duenoTelefono">—</span>
+                </div>
+                <div class="owner-contact-actions">
+                    <a id="btnLlamar" class="btn-guest-action" href="#" target="_self">
+                        <i class="fa-solid fa-phone"></i> Llamar
+                    </a>
+                    <a id="btnWhatsapp" class="btn-guest-action primary" href="#" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </form>
+    </main>
+
+</div>
+
+    <script src="../js/guarderia/detalle-mascota.js"></script>
+</body>
+</html>
