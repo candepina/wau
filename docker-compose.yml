@@ -1,7 +1,7 @@
 services:
   postgres:
-    image: postgres:16-alpine
     container_name: wau-postgres
+    image: postgres:16-alpine
     restart: always
     environment:
       POSTGRES_DB: wau_db
@@ -12,5 +12,75 @@ services:
     volumes:
       - wau_postgres_data:/var/lib/postgresql/data
 
+  # ============================================
+  # Evolution API (WhatsApp central de Wau)
+  # Recibe los envios de notificaciones del backend.
+  # Se empareja UNA vez por QR desde evolution-manager.
+  # ============================================
+  evolution-postgres:
+    container_name: evolution-postgres
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: evolution_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    volumes:
+      - evolution_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  evolution-redis:
+    container_name: evolution-redis
+    image: redis:7-alpine
+    restart: always
+    command: redis-server --appendonly yes
+    volumes:
+      - evolution_redis_data:/data
+
+  evolution-api:
+    container_name: evolution-api
+    image: evoapicloud/evolution-api:latest
+    restart: always
+    depends_on:
+      evolution-postgres:
+        condition: service_healthy
+      evolution-redis:
+        condition: service_started
+    environment:
+      # Debe coincidir con evolution.apikey en application.properties
+      AUTHENTICATION_API_KEY: wau-evolution-8f4c2a91
+      DATABASE_PROVIDER: postgresql
+      DATABASE_CONNECTION_URI: postgresql://postgres:password123@evolution-postgres:5432/evolution_db
+      DATABASE_CONNECTION_CLIENT_NAME: wau
+      CACHE_REDIS_ENABLED: "true"
+      CACHE_REDIS_URI: redis://evolution-redis:6379
+      CACHE_REDIS_PREFIX_KEY: wau-evo
+      CACHE_LOCAL_ENABLED: "true"
+      TELEMETRY_ENABLED: "false"
+    ports:
+      - "8082:8080"
+    volumes:
+      - evolution_instances:/evolution/instances
+
+  evolution-manager:
+    container_name: evolution-manager
+    # :latest (v2.3.5) tiene una config de nginx invalida; v2.0.0 es el build que arranca OK
+    image: evoapicloud/evolution-manager:v2.0.0
+    restart: always
+    depends_on:
+      - evolution-api
+    ports:
+      - "3000:80"
+    volumes:
+      # nginx.conf corregido (ver comentario en docker/evolution-manager/nginx.conf)
+      - ./docker/evolution-manager/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+
 volumes:
   wau_postgres_data:
+  evolution_postgres_data:
+  evolution_redis_data:
+  evolution_instances:

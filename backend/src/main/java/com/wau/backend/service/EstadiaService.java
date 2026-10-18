@@ -15,6 +15,7 @@ import com.wau.backend.repository.ActividadRepository;
 import com.wau.backend.repository.EstadiaRepository;
 import com.wau.backend.repository.MascotaRepository;
 import com.wau.backend.repository.UsuarioRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class EstadiaService {
 
@@ -29,15 +31,18 @@ public class EstadiaService {
     private final MascotaRepository mascotaRepository;
     private final UsuarioRepository usuarioRepository;
     private final ActividadRepository actividadRepository;
+    private final NotificacionService notificacionService;
 
     public EstadiaService(EstadiaRepository estadiaRepository,
                           MascotaRepository mascotaRepository,
                           UsuarioRepository usuarioRepository,
-                          ActividadRepository actividadRepository) {
+                          ActividadRepository actividadRepository,
+                          NotificacionService notificacionService) {
         this.estadiaRepository = estadiaRepository;
         this.mascotaRepository = mascotaRepository;
         this.usuarioRepository = usuarioRepository;
         this.actividadRepository = actividadRepository;
+        this.notificacionService = notificacionService;
     }
 
     public EstadiaResponse crearEstadia(String emailGuarderia, EstadiaRequest request) {
@@ -155,7 +160,28 @@ public class EstadiaService {
         actividad.setEstadia(estadia);
 
         Actividad guardada = actividadRepository.save(actividad);
+
+        notificarNuevaActividad(estadia);
+
         return mapearActividadADTO(guardada);
+    }
+
+    // Dispara la notificacion WhatsApp al dueno si la estadía está activa.
+    // El telefono se resuelve aca, sincronicamente (dentro de la sesion de Hibernate),
+    // porque el envio asincronico corre en otro hilo sin acceso a la sesion.
+    private void notificarNuevaActividad(Estadia estadia) {
+        try {
+            if (estadia.getEstado() != EstadoEstadia.ACTIVA) {
+                return;
+            }
+            if (estadia.getMascota() == null || estadia.getMascota().getDueno() == null) {
+                return;
+            }
+            String telefonoDueno = estadia.getMascota().getDueno().getTelefono();
+            notificacionService.notificarNuevaActividad(telefonoDueno, estadia.getId());
+        } catch (Exception e) {
+            log.warn("No se pudo programar la notificacion para la estadía {}: {}", estadia.getId(), e.getMessage());
+        }
     }
 
     private void validarPertenenciaGuarderia(Estadia estadia, String emailGuarderia) {
