@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class RegistroRequest {
 
+    // Campos comunes (obligatorios en ambos roles) — validados por Bean Validation
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "Formato de email inválido")
     private String email;
@@ -26,27 +27,13 @@ public class RegistroRequest {
     @NotNull(message = "El rol es obligatorio")
     private RolUsuario rol; // ROLE_DUENO o ROLE_GUARDERIA
 
-    // Campos específicos para Dueño
-    @NotBlank(message = "El nombre es obligatorio")
+    // Campos del perfil según el rol: se validan en AuthService.registrar()
+    // (mismo criterio que PerfilRequest en UsuarioService)
     private String nombre;
-
-    @NotBlank(message = "El apellido es obligatorio")
     private String apellido;
-
-    @NotBlank(message = "El DNI es obligatorio")
-    @Pattern(regexp = "^\\d{7,8}$", message = "El DNI debe tener 7 u 8 dígitos numéricos")
     private String dni;
-
-    @NotBlank(message = "La dirección es obligatoria")
     private String direccionDomicilio;
-
-    // Campos específicos para Guardería
-    @NotBlank(message = "El nombre del establecimiento es obligatorio")
     private String nombreEstablecimiento;
-
-    @NotBlank(message = "El nombre del responsable es obligatorio")
     private String nombreResponsable;
-
-    @NotBlank(message = "La dirección del predio es obligatoria")
     private String direccionPredio;
 }
